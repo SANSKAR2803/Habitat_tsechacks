@@ -28,6 +28,7 @@ import { Progress } from '@/components/ui/progress'
 import { Input } from '@/components/ui/input'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import html2canvas from 'html2canvas'
 
 interface MapCanvasProps {
   lat: number
@@ -894,13 +895,110 @@ export function MapCanvas({
   }, [showSuitabilityOverlay, isAnalyzing, loadSuitabilityOverlay])
 
   const handleExport = async () => {
-    setExportStep('Polygonizing...')
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setExportStep('Packaging...')
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setExportStep('Download')
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    setExportStep(null)
+    if (!mapRef.current || !mapContainerRef.current) return
+
+    try {
+      setExportStep('Capturing map...')
+      
+      // Capture map screenshot with better error handling
+      try {
+        const canvas = await html2canvas(mapContainerRef.current, {
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: '#1a1a1a',
+          logging: false,
+          ignoreElements: (element) => {
+            // Ignore elements that might cause issues
+            return element.classList?.contains('leaflet-control') || false
+          },
+        })
+        
+        // Convert canvas to blob and download
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url
+            link.download = `map-screenshot-${lat.toFixed(4)}-${lng.toFixed(4)}-${Date.now()}.png`
+            link.click()
+            URL.revokeObjectURL(url)
+          }
+        })
+      } catch (screenshotError) {
+        console.warn('Screenshot capture failed, continuing with data export:', screenshotError)
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      setExportStep('Preparing data...')
+
+      // Prepare analysis data
+      const analysisData = {
+        location: {
+          latitude: lat,
+          longitude: lng,
+          radius_km: radius,
+        },
+        timestamp: new Date().toISOString(),
+        detected_sites: detectedSites.map(site => ({
+          id: site.id,
+          category: site.category,
+          suitability_score: site.suitabilityScore,
+          ndvi: site.ndvi,
+          ndmi: site.ndmi,
+          area_hectares: site.area,
+          bounds: {
+            south: site.bounds.getSouth(),
+            west: site.bounds.getWest(),
+            north: site.bounds.getNorth(),
+            east: site.bounds.getEast(),
+          }
+        })),
+        summary: {
+          total_sites: detectedSites.length,
+          high_suitability_sites: highSites.length,
+          medium_suitability_sites: mediumSites.length,
+          total_area_hectares: totalArea,
+        }
+      }
+
+      setExportStep('Generating files...')
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      // Export as JSON
+      const jsonBlob = new Blob([JSON.stringify(analysisData, null, 2)], {
+        type: 'application/json'
+      })
+      const jsonUrl = URL.createObjectURL(jsonBlob)
+      const jsonLink = document.createElement('a')
+      jsonLink.href = jsonUrl
+      jsonLink.download = `afforestation-analysis-${lat.toFixed(4)}-${lng.toFixed(4)}-${Date.now()}.json`
+      jsonLink.click()
+      URL.revokeObjectURL(jsonUrl)
+
+      // Export as CSV
+      const csvHeader = 'Site ID,Category,Suitability Score,NDVI,NDMI,Area (ha),South,West,North,East\n'
+      const csvRows = detectedSites.map(site => 
+        `${site.id},${site.category},${site.suitabilityScore.toFixed(2)},${site.ndvi.toFixed(3)},${site.ndmi.toFixed(3)},${site.area.toFixed(2)},${site.bounds.getSouth().toFixed(6)},${site.bounds.getWest().toFixed(6)},${site.bounds.getNorth().toFixed(6)},${site.bounds.getEast().toFixed(6)}`
+      ).join('\n')
+      const csvContent = csvHeader + csvRows
+
+      const csvBlob = new Blob([csvContent], { type: 'text/csv' })
+      const csvUrl = URL.createObjectURL(csvBlob)
+      const csvLink = document.createElement('a')
+      csvLink.href = csvUrl
+      csvLink.download = `afforestation-sites-${lat.toFixed(4)}-${lng.toFixed(4)}-${Date.now()}.csv`
+      csvLink.click()
+      URL.revokeObjectURL(csvUrl)
+
+      setExportStep('Complete!')
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      setExportStep(null)
+    } catch (error) {
+      console.error('Export failed:', error)
+      setExportStep('Failed')
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+      setExportStep(null)
+    }
   }
 
   // Calculate stats
