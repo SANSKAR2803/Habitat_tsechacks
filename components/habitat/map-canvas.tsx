@@ -870,7 +870,7 @@ export function MapCanvas({
   const totalArea = detectedSites.reduce((sum, s) => sum + s.area, 0)
 
   return (
-    <div className="relative h-full w-full overflow-hidden">
+    <div className="relative h-full w-full overflow-hidden isolate">
       {/* Map Container */}
       <div
         ref={mapContainerRef}

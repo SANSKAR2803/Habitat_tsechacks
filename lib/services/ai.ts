@@ -118,10 +118,10 @@ async function generateOpenAIRecommendation(prompt: string): Promise<AIRecommend
 }
 
 async function generateGeminiRecommendation(prompt: string): Promise<AIRecommendation> {
-  const apiKey = process.env.GOOGLE_AI_API_KEY;
+  const apiKey = process.env.GOOGLE_AI_API_KEY || process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
-    throw new Error('GOOGLE_AI_API_KEY is not configured');
+    throw new Error('GOOGLE_AI_API_KEY or GOOGLE_API_KEY is not configured');
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);

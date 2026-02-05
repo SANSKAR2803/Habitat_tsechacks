@@ -19,6 +19,7 @@ import {
   Target,
   Scan,
   Bot,
+  MessageCircle,
 } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
@@ -26,6 +27,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { HealthGauge } from '@/components/habitat/health-gauge'
 import { MetricCard } from '@/components/habitat/metric-card'
 import { TrendsChart } from '@/components/habitat/trends-chart'
@@ -131,6 +138,9 @@ export default function HabitatDashboard() {
   const [selectedSpecies, setSelectedSpecies] = useState<Species[]>([])
   const [predictionData, setPredictionData] = useState<any>(null)
   const [isPredictionLoading, setIsPredictionLoading] = useState(false)
+
+  // Floating AI Chat state
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false)
 
   // Fetch predictions
   const fetchPredictions = useCallback(async () => {
@@ -849,6 +859,37 @@ export default function HabitatDashboard() {
           </div>
         )}
       </main>
+
+      {/* Floating AI Chat Button and Sheet */}
+      <Sheet open={isAIChatOpen} onOpenChange={setIsAIChatOpen}>
+        <SheetTrigger asChild>
+          <Button
+            size="lg"
+            className={cn(
+              'fixed bottom-6 right-6 z-[100] h-14 w-14 rounded-full shadow-lg transition-all duration-300',
+              'bg-emerald-600 hover:bg-emerald-500 hover:scale-105',
+              'flex items-center justify-center',
+              isAIChatOpen && 'scale-0 opacity-0'
+            )}
+            aria-label="Open AI Chat"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent 
+          side="right" 
+          className="w-full sm:max-w-md md:max-w-lg p-0 gap-0"
+        >
+          <SheetTitle className="sr-only">HABITAT AI Assistant</SheetTitle>
+          <div className="flex flex-col h-full">
+            <AIChat
+              initialLat={parseFloat(lat) || 20.5937}
+              initialLng={parseFloat(lng) || 78.9629}
+              className="h-full border-0 rounded-none"
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   )
 }

@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -161,12 +162,78 @@ function MessageBubble({ message }: { message: Message }) {
                 : 'bg-secondary/50 text-foreground rounded-tl-sm'
             )}
           >
-            <div className="prose prose-sm prose-invert max-w-none">
-              {message.content.split('\n').map((line, i) => (
-                <p key={i} className="mb-1 last:mb-0">
-                  {line || '\u00A0'}
-                </p>
-              ))}
+            <div className="prose prose-sm prose-invert max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  table: ({ children }) => (
+                    <table className="w-full border-collapse text-sm my-2">
+                      {children}
+                    </table>
+                  ),
+                  th: ({ children }) => (
+                    <th className="border border-border/50 bg-secondary/50 px-2 py-1 text-left font-medium">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="border border-border/50 px-2 py-1">
+                      {children}
+                    </td>
+                  ),
+                  code: ({ children, className }) => {
+                    const isInline = !className
+                    return isInline ? (
+                      <code className="bg-secondary/70 px-1 py-0.5 rounded text-xs font-mono">
+                        {children}
+                      </code>
+                    ) : (
+                      <code className="block bg-secondary/70 p-2 rounded text-xs font-mono overflow-x-auto my-2">
+                        {children}
+                      </code>
+                    )
+                  },
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-inside my-2 space-y-1">{children}</ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-inside my-2 space-y-1">{children}</ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="leading-relaxed">{children}</li>
+                  ),
+                  p: ({ children }) => (
+                    <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-semibold text-foreground">{children}</strong>
+                  ),
+                  em: ({ children }) => (
+                    <em className="italic">{children}</em>
+                  ),
+                  h1: ({ children }) => (
+                    <h1 className="text-lg font-bold mt-3 mb-2">{children}</h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-base font-semibold mt-3 mb-2">{children}</h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-sm font-semibold mt-2 mb-1">{children}</h3>
+                  ),
+                  a: ({ href, children }) => (
+                    <a href={href} className="text-primary underline hover:no-underline" target="_blank" rel="noopener noreferrer">
+                      {children}
+                    </a>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-2 border-primary/50 pl-3 my-2 italic text-muted-foreground">
+                      {children}
+                    </blockquote>
+                  ),
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
             </div>
           </div>
         )}
@@ -378,7 +445,7 @@ export function AIChat({ initialLat, initialLng, className }: AIChatProps) {
       )}
     >
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-border/50 px-4 py-3">
+      <div className="flex items-center gap-3 border-b border-border/50 px-4 py-3 shrink-0">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/20">
           <Bot className="h-5 w-5 text-emerald-400" />
         </div>
@@ -402,7 +469,7 @@ export function AIChat({ initialLat, initialLng, className }: AIChatProps) {
       </div>
 
       {/* Messages */}
-      <ScrollArea ref={scrollRef} className="flex-1 px-4">
+      <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-4">
         {messages.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center py-8 text-center">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/10">
@@ -449,12 +516,12 @@ export function AIChat({ initialLat, initialLng, className }: AIChatProps) {
             )}
           </div>
         )}
-      </ScrollArea>
+      </div>
 
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="border-t border-border/50 p-4"
+        className="border-t border-border/50 p-4 shrink-0 bg-card/50"
       >
         <div className="flex gap-2">
           <Textarea

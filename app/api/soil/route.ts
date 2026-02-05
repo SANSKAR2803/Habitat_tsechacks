@@ -1,10 +1,14 @@
 /**
  * Soil API Route
- * GET /api/soil?lat=<lat>&lon=<lon>
+ * GET /api/soil?lat=<lat>&lon=<lon>&profile=true (optional)
+ * 
+ * Uses SoilGrids API (ISRIC) for comprehensive soil data
+ * - Basic mode: Returns clay, sand, silt, pH, nitrogen, organic_carbon, CEC, bulk_density
+ * - Profile mode (?profile=true): Returns full depth profile with texture class, drainage, recommendations
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchSoilData } from '@/lib/services/soil';
+import { fetchSoilData, fetchSoilProfile } from '@/lib/services/soil';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,6 +18,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const latParam = searchParams.get('lat');
     const lonParam = searchParams.get('lon');
+    const profileMode = searchParams.get('profile') === 'true';
 
     if (!latParam || !lonParam) {
       return NextResponse.json(
@@ -32,11 +37,31 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Use comprehensive profile if requested
+    if (profileMode) {
+      const profile = await fetchSoilProfile(lat, lon);
+      return NextResponse.json(
+        {
+          success: true,
+          source: 'SoilGrids (ISRIC)',
+          data: profile
+        },
+        {
+          status: 200,
+          headers: {
+            'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=172800'
+          }
+        }
+      );
+    }
+
+    // Basic mode
     const data = await fetchSoilData(lat, lon);
 
     return NextResponse.json(
       {
         success: true,
+        source: 'SoilGrids (ISRIC)',
         data
       },
       {
