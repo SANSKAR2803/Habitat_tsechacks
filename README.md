@@ -1,5 +1,8 @@
 # 🌲 Habitat - Adaptive Reforestation Platform
-#  youtube video link https://youtu.be/PVFCDZHA3nM?si=JWHWQqirG2Qh8RtL
+## 🎥 Project Demo Video
+
+[![Habitat Demo Video](https://img.youtube.com/vi/PVFCDZHA3nM/maxresdefault.jpg)](https://www.youtube.com/watch?v=PVFCDZHA3nM)
+
 <div align="center">
 
 ![Habitat Banner](https://img.shields.io/badge/🌲_Habitat-Reforestation_Platform-228B22?style=for-the-badge&labelColor=0d1117)
