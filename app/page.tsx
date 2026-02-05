@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useEffect, useState, useCallback } from 'react'
-import dynamic from 'next/dynamic'
+import { useEffect, useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import {
   Activity,
   Bell,
@@ -47,10 +47,40 @@ import { analyzeSector as analyzeSectorApi, getMonitoringData, getPredictions } 
 import type { ApiResponse, Species } from '@/lib/types'
 import type { AfforestationSite } from '@/components/habitat/map-canvas'
 import { cn } from '@/lib/utils'
+} from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { HealthGauge } from "@/components/habitat/health-gauge";
+import { MetricCard } from "@/components/habitat/metric-card";
+import { TrendsChart } from "@/components/habitat/trends-chart";
+import { SpeciesList } from "@/components/habitat/species-list";
+import { SoilProfile } from "@/components/habitat/soil-profile";
+import { AlertsPanel } from "@/components/habitat/alerts-panel";
+import { CalamitySimulator } from "@/components/habitat/calamity-simulator";
+import { PredictionPanel } from "@/components/habitat/prediction-panel";
+import { ForestLoader } from "@/components/habitat/forest-loader";
+import { AIChat } from "@/components/habitat/ai-chat";
+import { RiskAdvisory } from "@/components/habitat/risk-advisory";
+import {
+  analyzeSector as analyzeSectorApi,
+  getMonitoringData,
+  getPredictions,
+} from "@/lib/api";
+import type {
+  ApiResponse,
+  Species,
+  RiskAdvisory as RiskAdvisoryType,
+} from "@/lib/types";
+import type { AfforestationSite } from "@/components/habitat/map-canvas";
+import { cn } from "@/lib/utils";
 
 // Dynamically import map to avoid SSR issues with Leaflet
 const MapCanvas = dynamic(
-  () => import('@/components/habitat/map-canvas').then((mod) => mod.default),
+  () => import("@/components/habitat/map-canvas").then((mod) => mod.default),
   {
     ssr: false,
     loading: () => (
@@ -62,36 +92,113 @@ const MapCanvas = dynamic(
       </div>
     ),
   }
-)
+);
 
-type Phase = 'planning' | 'monitoring' | 'simulation' | 'prediction'
+type Phase = "planning" | "monitoring" | "simulation" | "prediction";
 
 const phases = [
   {
-    id: 'planning' as const,
-    label: 'Planning',
+    id: "planning" as const,
+    label: "Planning",
     icon: Map,
-    description: 'Sector analysis & species selection',
+    description: "Sector analysis & species selection",
   },
   {
-    id: 'monitoring' as const,
-    label: 'Monitoring',
+    id: "monitoring" as const,
+    label: "Monitoring",
     icon: Eye,
-    description: 'Real-time ecosystem health',
+    description: "Real-time ecosystem health",
   },
   {
-    id: 'simulation' as const,
-    label: 'Simulation',
+    id: "simulation" as const,
+    label: "Simulation",
     icon: FlaskConical,
-    description: 'Calamity impact modeling',
+    description: "Calamity impact modeling",
   },
   {
-    id: 'prediction' as const,
-    label: 'Prediction',
+    id: "prediction" as const,
+    label: "Prediction",
     icon: TrendingUp,
-    description: 'Future forecasts & risks',
+    description: "Future forecasts & risks",
   },
-]
+];
+
+// Impact messages for monitoring metrics
+const getImpactInfo = {
+  ndvi: (value: number): string | undefined => {
+    if (value < 0.2)
+      return "⚠️ Very low vegetation. Land is barren or severely degraded. High erosion risk, no carbon sequestration, loss of biodiversity habitat.";
+    if (value < 0.3)
+      return "⚠️ Low vegetation cover. Sparse plant life indicates stressed ecosystem. Reduced water retention, declining soil health.";
+    if (value > 0.8)
+      return "✓ Exceptionally high vegetation. Dense forest cover with excellent carbon capture and biodiversity support.";
+    return undefined;
+  },
+  soilPh: (value: number): string | undefined => {
+    if (value < 5.5)
+      return "⚠️ Acidic soil. Limits nutrient availability (especially phosphorus). Aluminum toxicity risk. Most trees struggle to grow.";
+    if (value < 6.0)
+      return "⚠️ Slightly acidic. Some species may face nutrient deficiency. Consider lime treatment before planting.";
+    if (value > 8.0)
+      return "⚠️ Highly alkaline soil. Iron, zinc, and manganese become unavailable. Causes chlorosis (yellowing) in plants.";
+    if (value > 7.5)
+      return "⚠️ Alkaline soil. Reduced micronutrient availability. Select alkali-tolerant species only.";
+    return undefined;
+  },
+  temperature: (value: number): string | undefined => {
+    if (value < 10)
+      return "⚠️ Cold stress zone. Growth slows significantly. Risk of frost damage to saplings. Delayed germination.";
+    if (value > 42)
+      return "🔴 Extreme heat. Severe water stress, leaf scorching, potential tree mortality. Irrigation critical.";
+    if (value > 38)
+      return "⚠️ High heat stress. Increased evapotranspiration, wilting risk. Trees require extra water.";
+    if (value > 35)
+      return "⚠️ Above optimal temperature. Young saplings may struggle. Monitor for heat stress signs.";
+    return undefined;
+  },
+  moisture: (value: number): string | undefined => {
+    if (value < 15)
+      return "🔴 Critical drought conditions. Severe water deficit causing wilting, leaf drop. Tree survival at risk.";
+    if (value < 25)
+      return "⚠️ Low soil moisture. Water stress affecting growth. Root development impacted. Irrigation recommended.";
+    if (value > 85)
+      return "⚠️ Waterlogged soil. Risk of root rot and fungal diseases. Poor oxygen availability for roots.";
+    if (value > 75)
+      return "⚠️ High moisture. Some species may suffer root problems. Ensure adequate drainage.";
+    return undefined;
+  },
+  aqi: (value: number): string | undefined => {
+    if (value > 200)
+      return "🔴 Very poor air quality. Significant plant damage from pollutants. Reduced photosynthesis, leaf necrosis.";
+    if (value > 150)
+      return "⚠️ Unhealthy air. Pollutants affecting plant stomata. Reduced growth rate and carbon uptake.";
+    if (value > 100)
+      return "⚠️ Moderate pollution. Some sensitive species may show stress. Long-term exposure affects health.";
+    return undefined;
+  },
+  forestCover: (value: number): string | undefined => {
+    if (value < 15)
+      return "🔴 Critical deforestation. Severe habitat loss, high erosion, reduced rainfall. Urgent reforestation needed.";
+    if (value < 25)
+      return "⚠️ Low forest cover. Fragmented habitat, declining biodiversity. Ecosystem services compromised.";
+    if (value > 70)
+      return "✓ Excellent forest coverage. Healthy ecosystem with strong biodiversity corridors and carbon sinks.";
+    return undefined;
+  },
+  carbonSeq: (value: number): string | undefined => {
+    if (value < 50)
+      return "⚠️ Low carbon capture. Degraded vegetation storing minimal carbon. Reforestation can improve this 4-5x.";
+    if (value > 200)
+      return "✓ Excellent carbon sequestration. Mature, healthy forest actively removing CO₂ from atmosphere.";
+    return undefined;
+  },
+};
+
+// Helper to format number to 2 decimal places
+const formatValue = (value: number | undefined): string => {
+  if (value === undefined) return "0";
+  return (Math.round(value * 100) / 100).toString();
+};
 
 const mockApiResponse = {
   metrics: {
@@ -114,61 +221,61 @@ const mockApiResponse = {
     phosphorus: 0,
     potassium: 0,
     organicMatter: 0,
-    texture: 'Unknown',
+    texture: "Unknown",
   },
-}
+};
 
 export default function HabitatDashboard() {
   // Phase state
-  const [activePhase, setActivePhase] = useState<Phase>('planning')
+  const [activePhase, setActivePhase] = useState<Phase>("planning");
 
   // Query state - Default to center of India
-  const [lat, setLat] = useState('20.5937')
-  const [lng, setLng] = useState('78.9629')
-  const [radius, setRadius] = useState('5')
+  const [lat, setLat] = useState("20.5937");
+  const [lng, setLng] = useState("78.9629");
+  const [radius, setRadius] = useState("5");
 
   // Data state
-  const [data, setData] = useState<ApiResponse | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [showSuitabilityOverlay, setShowSuitabilityOverlay] = useState(false)
-  const [detectedSites, setDetectedSites] = useState<AfforestationSite[]>([])
+  const [data, setData] = useState<ApiResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showSuitabilityOverlay, setShowSuitabilityOverlay] = useState(false);
+  const [detectedSites, setDetectedSites] = useState<AfforestationSite[]>([]);
 
   // Simulation state
-  const [selectedSpecies, setSelectedSpecies] = useState<Species[]>([])
-  const [predictionData, setPredictionData] = useState<any>(null)
-  const [isPredictionLoading, setIsPredictionLoading] = useState(false)
+  const [selectedSpecies, setSelectedSpecies] = useState<Species[]>([]);
+  const [predictionData, setPredictionData] = useState<any>(null);
+  const [isPredictionLoading, setIsPredictionLoading] = useState(false);
 
   // Floating AI Chat state
   const [isAIChatOpen, setIsAIChatOpen] = useState(false)
 
   // Fetch predictions
   const fetchPredictions = useCallback(async () => {
-    setIsPredictionLoading(true)
+    setIsPredictionLoading(true);
     try {
       const predictions = await getPredictions({
         lat: parseFloat(lat) || 20.5937,
         lng: parseFloat(lng) || 78.9629,
         timelineMonths: 36,
-        selectedSpecies: selectedSpecies.map(s => s.name),
-      })
-      setPredictionData(predictions)
+        selectedSpecies: selectedSpecies.map((s) => s.name),
+      });
+      setPredictionData(predictions);
     } catch (error) {
-      console.error('Failed to fetch predictions:', error)
+      console.error("Failed to fetch predictions:", error);
     }
-    setIsPredictionLoading(false)
-  }, [lat, lng, selectedSpecies])
+    setIsPredictionLoading(false);
+  }, [lat, lng, selectedSpecies]);
 
   // Fetch monitoring data from API
   const fetchData = useCallback(async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const monitoringData = await getMonitoringData({
         lat: parseFloat(lat) || 20.5937,
         lng: parseFloat(lng) || 78.9629,
-      })
+      });
       setData({
-        status: 'success',
+        status: "success",
         coordinates: {
           lat: parseFloat(lat) || 20.5937,
           lng: parseFloat(lng) || 78.9629,
@@ -181,36 +288,36 @@ export default function HabitatDashboard() {
           phosphorus: 0,
           potassium: 0,
           organicMatter: 0,
-          texture: 'Unknown',
+          texture: "Unknown",
         },
-      })
+      });
     } catch (error) {
-      console.error('Failed to fetch monitoring data:', error)
+      console.error("Failed to fetch monitoring data:", error);
       // Fallback to default data
       setData({
-        status: 'success',
+        status: "success",
         coordinates: {
           lat: parseFloat(lat) || 20.5937,
           lng: parseFloat(lng) || 78.9629,
         },
         ...mockApiResponse,
-      })
+      });
     }
-    setIsLoading(false)
-  }, [lat, lng])
+    setIsLoading(false);
+  }, [lat, lng]);
 
   // Analyze sector (full heatmap analysis) using API
   const analyzeSector = useCallback(async () => {
-    setIsAnalyzing(true)
-    setShowSuitabilityOverlay(false)
+    setIsAnalyzing(true);
+    setShowSuitabilityOverlay(false);
     try {
       const analysisData = await analyzeSectorApi({
         lat: parseFloat(lat) || 20.5937,
         lng: parseFloat(lng) || 78.9629,
         radius: parseFloat(radius) || 5,
-      })
+      });
       setData({
-        status: 'success',
+        status: "success",
         coordinates: analysisData.coordinates,
         metrics: analysisData.metrics,
         history: analysisData.history,
@@ -218,43 +325,47 @@ export default function HabitatDashboard() {
         soilProfile: analysisData.soilProfile,
         alerts: analysisData.alerts,
         ndviAnalysis: analysisData.ndviAnalysis,
-      })
+      });
     } catch (error) {
-      console.error('Sector analysis failed:', error)
+      console.error("Sector analysis failed:", error);
     }
-    setIsAnalyzing(false)
-    setShowSuitabilityOverlay(true)
-  }, [lat, lng, radius])
+    setIsAnalyzing(false);
+    setShowSuitabilityOverlay(true);
+  }, [lat, lng, radius]);
 
   // Handle sites detected from map
   const handleSitesDetected = useCallback((sites: AfforestationSite[]) => {
-    setDetectedSites(sites)
-  }, [])
+    setDetectedSites(sites);
+  }, []);
 
   // Initial data fetch
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   // Fetch predictions when entering prediction phase
   useEffect(() => {
-    if (activePhase === 'prediction' && !isPredictionLoading && !predictionData) {
-      fetchPredictions()
+    if (
+      activePhase === "prediction" &&
+      !isPredictionLoading &&
+      !predictionData
+    ) {
+      fetchPredictions();
     }
-  }, [activePhase, fetchPredictions, isPredictionLoading, predictionData])
+  }, [activePhase, fetchPredictions, isPredictionLoading, predictionData]);
 
   // Handle map click
   const handleMapClick = (newLat: number, newLng: number) => {
-    setLat(newLat.toFixed(6))
-    setLng(newLng.toFixed(6))
-  }
+    setLat(newLat.toFixed(6));
+    setLng(newLng.toFixed(6));
+  };
 
   // Calculate site stats
-  const highPrioritySites = detectedSites.filter((s) => s.category === 'high')
+  const highPrioritySites = detectedSites.filter((s) => s.category === "high");
   const mediumPrioritySites = detectedSites.filter(
-    (s) => s.category === 'medium'
-  )
-  const totalSiteArea = detectedSites.reduce((sum, s) => sum + s.area, 0)
+    (s) => s.category === "medium"
+  );
+  const totalSiteArea = detectedSites.reduce((sum, s) => sum + s.area, 0);
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -276,24 +387,24 @@ export default function HabitatDashboard() {
           {/* Phase Tabs - Desktop */}
           <nav className="hidden lg:flex items-center gap-1 rounded-xl bg-muted/50 p-1">
             {phases.map((phase) => {
-              const Icon = phase.icon
-              const isActive = activePhase === phase.id
+              const Icon = phase.icon;
+              const isActive = activePhase === phase.id;
               return (
                 <button
                   key={phase.id}
                   type="button"
                   onClick={() => setActivePhase(phase.id)}
                   className={cn(
-                    'flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all',
+                    "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all",
                     isActive
-                      ? 'bg-background text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   <Icon className="h-4 w-4" />
                   {phase.label}
                 </button>
-              )
+              );
             })}
           </nav>
 
@@ -320,24 +431,24 @@ export default function HabitatDashboard() {
         <div className="lg:hidden border-t border-border/50 px-4 py-2">
           <div className="flex items-center gap-1 overflow-x-auto">
             {phases.map((phase) => {
-              const Icon = phase.icon
-              const isActive = activePhase === phase.id
+              const Icon = phase.icon;
+              const isActive = activePhase === phase.id;
               return (
                 <button
                   key={phase.id}
                   type="button"
                   onClick={() => setActivePhase(phase.id)}
                   className={cn(
-                    'flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all',
+                    "flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all",
                     isActive
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-muted-foreground'
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground"
                   )}
                 >
                   <Icon className="h-4 w-4" />
                   {phase.label}
                 </button>
-              )
+              );
             })}
           </div>
         </div>
@@ -346,7 +457,7 @@ export default function HabitatDashboard() {
       {/* Main Content */}
       <main className="flex-1">
         {/* Planning Phase */}
-        {activePhase === 'planning' && (
+        {activePhase === "planning" && (
           <div className="flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
             {/* Map Panel - Full width on left */}
             <div className="relative h-[50vh] lg:h-full w-full lg:flex-1">
@@ -433,7 +544,7 @@ export default function HabitatDashboard() {
                   className="w-full gap-2"
                 >
                   <Scan className="h-4 w-4" />
-                  {isAnalyzing ? 'Analyzing...' : 'Analyze Sector'}
+                  {isAnalyzing ? "Analyzing..." : "Analyze Sector"}
                 </Button>
               </div>
 
@@ -574,7 +685,7 @@ export default function HabitatDashboard() {
                               </div>
                               <div>
                                 <p className="text-sm font-medium text-foreground">
-                                  Site {site.id.split('-').slice(1).join('-')}
+                                  Site {site.id.split("-").slice(1).join("-")}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
                                   {site.area.toFixed(2)} ha
@@ -597,7 +708,10 @@ export default function HabitatDashboard() {
                     {/* Additional Tabs for Species, Soil & AI Chat */}
                     <Tabs defaultValue="ai" className="mt-4">
                       <TabsList className="w-full bg-muted/50">
-                        <TabsTrigger value="ai" className="flex-1 text-xs gap-1.5">
+                        <TabsTrigger
+                          value="ai"
+                          className="flex-1 text-xs gap-1.5"
+                        >
                           <Bot className="h-3 w-3" />
                           AI Chat
                         </TabsTrigger>
@@ -631,7 +745,7 @@ export default function HabitatDashboard() {
                               phosphorus: 0,
                               potassium: 0,
                               organicMatter: 0,
-                              texture: 'Unknown',
+                              texture: "Unknown",
                             }
                           }
                           isLoading={isLoading}
@@ -650,7 +764,8 @@ export default function HabitatDashboard() {
                         No Analysis Yet
                       </h4>
                       <p className="text-xs text-muted-foreground max-w-[200px]">
-                        Click "Analyze Sector" above, or ask the AI assistant below.
+                        Click "Analyze Sector" above, or ask the AI assistant
+                        below.
                       </p>
                     </div>
 
@@ -670,7 +785,7 @@ export default function HabitatDashboard() {
         )}
 
         {/* Monitoring Phase */}
-        {activePhase === 'monitoring' && (
+        {activePhase === "monitoring" && (
           <div className="flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
             {/* Metrics Overview */}
             <div className="flex-1 overflow-y-auto p-4 lg:w-[50%]">
@@ -680,6 +795,10 @@ export default function HabitatDashboard() {
                   <HealthGauge
                     score={data?.metrics.health_score ?? 0}
                     isLoading={isLoading}
+                    breakdown={data?.health_breakdown}
+                    calculationDescription={
+                      data?.health_calculation?.description
+                    }
                   />
                 </div>
 
@@ -687,58 +806,66 @@ export default function HabitatDashboard() {
                 <div className="grid grid-cols-2 gap-3">
                   <MetricCard
                     title="NDVI Index"
-                    value={data?.metrics.ndvi_current.toFixed(2) ?? '0'}
+                    value={formatValue(data?.metrics.ndvi_current)}
                     icon={Leaf}
                     isLoading={isLoading}
                     status={
                       (data?.metrics.ndvi_current ?? 0) > 0.5
-                        ? 'healthy'
+                        ? "healthy"
                         : (data?.metrics.ndvi_current ?? 0) > 0.3
-                          ? 'warning'
-                          : 'critical'
+                        ? "warning"
+                        : "critical"
                     }
                     trend="up"
                     trendValue="+8%"
+                    impact={getImpactInfo.ndvi(data?.metrics.ndvi_current ?? 0)}
                   />
                   <MetricCard
                     title="Soil pH"
-                    value={data?.metrics.soil_ph ?? '0'}
+                    value={formatValue(data?.metrics.soil_ph)}
                     icon={Layers}
                     isLoading={isLoading}
                     status={
                       (data?.metrics.soil_ph ?? 0) >= 6 &&
                       (data?.metrics.soil_ph ?? 0) <= 7.5
-                        ? 'healthy'
-                        : 'warning'
+                        ? "healthy"
+                        : "warning"
                     }
+                    impact={getImpactInfo.soilPh(data?.metrics.soil_ph ?? 0)}
                   />
                   <MetricCard
                     title="Temperature"
-                    value={data?.metrics.lst_temp ?? '0'}
+                    value={formatValue(data?.metrics.lst_temp)}
                     unit="°C"
                     icon={Thermometer}
                     isLoading={isLoading}
                     status={
                       (data?.metrics.lst_temp ?? 0) < 35
-                        ? 'healthy'
+                        ? "healthy"
                         : (data?.metrics.lst_temp ?? 0) < 40
-                          ? 'warning'
-                          : 'critical'
+                        ? "warning"
+                        : "critical"
                     }
+                    impact={getImpactInfo.temperature(
+                      data?.metrics.lst_temp ?? 0
+                    )}
                   />
                   <MetricCard
                     title="Moisture"
-                    value={data?.metrics.moisture_index ?? '0'}
+                    value={formatValue(data?.metrics.moisture_index)}
                     unit="%"
                     icon={Droplets}
                     isLoading={isLoading}
                     status={
                       (data?.metrics.moisture_index ?? 0) > 40
-                        ? 'healthy'
+                        ? "healthy"
                         : (data?.metrics.moisture_index ?? 0) > 20
-                          ? 'warning'
-                          : 'critical'
+                        ? "warning"
+                        : "critical"
                     }
+                    impact={getImpactInfo.moisture(
+                      data?.metrics.moisture_index ?? 0
+                    )}
                   />
                 </div>
 
@@ -746,36 +873,51 @@ export default function HabitatDashboard() {
                 <div className="grid grid-cols-3 gap-3">
                   <MetricCard
                     title="AQI"
-                    value={data?.metrics.aqi ?? '0'}
+                    value={formatValue(data?.metrics.aqi)}
                     icon={Wind}
                     isLoading={isLoading}
                     status={
                       (data?.metrics.aqi ?? 0) < 100
-                        ? 'healthy'
+                        ? "healthy"
                         : (data?.metrics.aqi ?? 0) < 150
-                          ? 'warning'
-                          : 'critical'
+                        ? "warning"
+                        : "critical"
                     }
+                    impact={getImpactInfo.aqi(data?.metrics.aqi ?? 0)}
                   />
                   <MetricCard
                     title="Forest Cover"
-                    value={data?.metrics.forest_cover ?? '0'}
+                    value={formatValue(data?.metrics.forest_cover)}
                     unit="%"
                     icon={TreeDeciduous}
                     isLoading={isLoading}
                     status={
                       (data?.metrics.forest_cover ?? 0) > 33
-                        ? 'healthy'
-                        : 'warning'
+                        ? "healthy"
+                        : (data?.metrics.forest_cover ?? 0) > 20
+                        ? "warning"
+                        : "critical"
                     }
+                    impact={getImpactInfo.forestCover(
+                      data?.metrics.forest_cover ?? 0
+                    )}
                   />
                   <MetricCard
                     title="Carbon Seq."
-                    value={data?.metrics.carbon_sequestration ?? '0'}
+                    value={formatValue(data?.metrics.carbon_sequestration)}
                     unit="t/ha"
                     icon={Activity}
                     isLoading={isLoading}
-                    status="healthy"
+                    status={
+                      (data?.metrics.carbon_sequestration ?? 0) > 100
+                        ? "healthy"
+                        : (data?.metrics.carbon_sequestration ?? 0) > 50
+                        ? "warning"
+                        : "critical"
+                    }
+                    impact={getImpactInfo.carbonSeq(
+                      data?.metrics.carbon_sequestration ?? 0
+                    )}
                   />
                 </div>
 
@@ -801,12 +943,19 @@ export default function HabitatDashboard() {
                 </h3>
                 <TrendsChart data={data?.history ?? []} isLoading={isLoading} />
               </div>
+
+              {/* Risk Advisory Section */}
+              {data?.risk_advisory && (
+                <div className="mt-4">
+                  <RiskAdvisory data={data.risk_advisory} />
+                </div>
+              )}
             </div>
           </div>
         )}
 
         {/* Simulation Phase */}
-        {activePhase === 'simulation' && (
+        {activePhase === "simulation" && (
           <div className="min-h-[calc(100vh-4rem)] p-4 lg:p-6">
             <div className="mx-auto max-w-5xl">
               <div className="mb-6">
@@ -829,7 +978,7 @@ export default function HabitatDashboard() {
         )}
 
         {/* Prediction Phase */}
-        {activePhase === 'prediction' && (
+        {activePhase === "prediction" && (
           <div className="min-h-[calc(100vh-4rem)] p-4 lg:p-6">
             <div className="mx-auto max-w-5xl">
               <div className="mb-6">
