@@ -79,7 +79,7 @@ export function SoilProfile({ data, isLoading }: SoilProfileProps) {
             <p className="text-sm text-muted-foreground">Soil pH Level</p>
             <div className="flex items-baseline gap-2">
               <span className={cn('font-mono text-3xl font-bold', getPhColor())}>
-                {data.ph}
+                {Number(data.ph).toFixed(2)}
               </span>
               <span className="text-xs text-muted-foreground">
                 {phStatus === 'optimal'
@@ -101,7 +101,7 @@ export function SoilProfile({ data, isLoading }: SoilProfileProps) {
           <div className="relative h-2 w-full overflow-hidden rounded-full bg-gradient-to-r from-rose-500 via-amber-500 to-emerald-500">
             <div
               className="absolute top-0 h-full w-1 bg-white shadow-lg"
-              style={{ left: `${((data.ph - 4) / 6) * 100}%` }}
+              style={{ left: `${((Number(data.ph) - 4) / 6) * 100}%` }}
             />
           </div>
           <div className="mt-1 flex justify-between text-xs text-muted-foreground">
@@ -127,14 +127,14 @@ export function SoilProfile({ data, isLoading }: SoilProfileProps) {
             </div>
             <div className="flex items-baseline gap-1">
               <span className="font-mono text-lg font-semibold text-foreground">
-                {nutrient.value}
+                {Number(nutrient.value).toFixed(2)}
               </span>
               <span className="text-xs text-muted-foreground">
                 {nutrient.unit}
               </span>
             </div>
             <Progress
-              value={(nutrient.value / nutrient.max) * 100}
+              value={Math.round((Number(nutrient.value) / nutrient.max) * 10000) / 100}
               className="mt-2 h-1.5"
             />
           </div>

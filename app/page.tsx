@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useCallback } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useState, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import {
   Activity,
   Bell,
@@ -21,6 +21,7 @@ import {
   Bot,
   MessageCircle,
 } from 'lucide-react'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -33,6 +34,7 @@ import {
   SheetTrigger,
   SheetTitle,
 } from '@/components/ui/sheet'
+
 import { HealthGauge } from '@/components/habitat/health-gauge'
 import { MetricCard } from '@/components/habitat/metric-card'
 import { TrendsChart } from '@/components/habitat/trends-chart'
@@ -43,40 +45,17 @@ import { CalamitySimulator } from '@/components/habitat/calamity-simulator'
 import { PredictionPanel } from '@/components/habitat/prediction-panel'
 import { ForestLoader } from '@/components/habitat/forest-loader'
 import { AIChat } from '@/components/habitat/ai-chat'
-import { analyzeSector as analyzeSectorApi, getMonitoringData, getPredictions } from '@/lib/api'
-import type { ApiResponse, Species } from '@/lib/types'
-import type { AfforestationSite } from '@/components/habitat/map-canvas'
-import { cn } from '@/lib/utils'
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { HealthGauge } from "@/components/habitat/health-gauge";
-import { MetricCard } from "@/components/habitat/metric-card";
-import { TrendsChart } from "@/components/habitat/trends-chart";
-import { SpeciesList } from "@/components/habitat/species-list";
-import { SoilProfile } from "@/components/habitat/soil-profile";
-import { AlertsPanel } from "@/components/habitat/alerts-panel";
-import { CalamitySimulator } from "@/components/habitat/calamity-simulator";
-import { PredictionPanel } from "@/components/habitat/prediction-panel";
-import { ForestLoader } from "@/components/habitat/forest-loader";
-import { AIChat } from "@/components/habitat/ai-chat";
-import { RiskAdvisory } from "@/components/habitat/risk-advisory";
+import { RiskAdvisory } from '@/components/habitat/risk-advisory'
+
 import {
   analyzeSector as analyzeSectorApi,
   getMonitoringData,
   getPredictions,
-} from "@/lib/api";
-import type {
-  ApiResponse,
-  Species,
-  RiskAdvisory as RiskAdvisoryType,
-} from "@/lib/types";
-import type { AfforestationSite } from "@/components/habitat/map-canvas";
-import { cn } from "@/lib/utils";
+} from '@/lib/api'
+
+import type { ApiResponse, Species, RiskAdvisory as RiskAdvisoryType } from '@/lib/types'
+import type { AfforestationSite } from '@/components/habitat/map-canvas'
+import { cn } from '@/lib/utils'
 
 // Dynamically import map to avoid SSR issues with Leaflet
 const MapCanvas = dynamic(

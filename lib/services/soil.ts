@@ -97,6 +97,7 @@ export interface LegacySoilData {
   ph: number;
   nitrogen: number;
   phosphorus: number;
+  calcium?: number;
   potassium: number;
   organicMatter: number;
   texture: string;
@@ -104,6 +105,9 @@ export interface LegacySoilData {
 }
 
 const SOILGRIDS_BASE_URL = 'https://rest.isric.org/soilgrids/v2.0';
+
+// Utility: round to 2 decimal places
+const round2 = (v: number) => Math.round((v + Number.EPSILON) * 100) / 100;
 
 /**
  * Fetch comprehensive soil data from SoilGrids API
@@ -184,15 +188,16 @@ export async function fetchSoilData(lat: number, lon: number): Promise<SoilData>
       return layer?.depths?.[0]?.values?.mean ?? 0;
     };
 
+    const round2 = (v: number) => Math.round((v + Number.EPSILON) * 100) / 100;
     return {
-      clay: getValue('clay') / 10,          // g/kg to %
-      sand: getValue('sand') / 10,
-      silt: getValue('silt') / 10,
-      pH: getValue('phh2o') / 10,           // pH*10 to pH
-      nitrogen: getValue('nitrogen') / 100,  // cg/kg to g/kg
-      organic_carbon: getValue('soc') / 10,  // dg/kg to g/kg
-      cec: getValue('cec') / 10,            // mmol(c)/kg to cmol(c)/kg
-      bulk_density: getValue('bdod') / 100   // cg/cm³ to g/cm³
+      clay: round2(getValue('clay') / 10),          // g/kg to %
+      sand: round2(getValue('sand') / 10),
+      silt: round2(getValue('silt') / 10),
+      pH: round2(getValue('phh2o') / 10),           // pH*10 to pH
+      nitrogen: round2(getValue('nitrogen') / 100),  // cg/kg to g/kg
+      organic_carbon: round2(getValue('soc') / 10),  // dg/kg to g/kg
+      cec: round2(getValue('cec') / 10),            // mmol(c)/kg to cmol(c)/kg
+      bulk_density: round2(getValue('bdod') / 100)   // cg/cm³ to g/cm³
     };
   } catch (error) {
     console.error('Soil data fetch error:', error);
@@ -209,11 +214,12 @@ export async function fetchLegacySoilData(lat: number, lon: number): Promise<Leg
     const topLayer = profile.layers[0];
     
     return {
-      ph: topLayer.pH,
-      nitrogen: topLayer.nitrogen * 100, // Convert back to mg/kg for display
-      phosphorus: estimatePhosphorus(topLayer), // Phosphorus not in SoilGrids, estimate from CEC
-      potassium: estimatePotassium(topLayer),   // Potassium not in SoilGrids, estimate from CEC
-      organicMatter: topLayer.organicCarbon * 1.724, // Convert organic carbon to organic matter
+      ph: Math.round((topLayer.pH + Number.EPSILON) * 100) / 100,
+      nitrogen: Math.round((topLayer.nitrogen * 100 + Number.EPSILON) * 100) / 100, // mg/kg
+      phosphorus: Math.round((estimatePhosphorus(topLayer) + Number.EPSILON) * 100) / 100,
+      calcium: Math.round((estimateCalcium(topLayer) + Number.EPSILON) * 100) / 100,
+      potassium: Math.round((estimatePotassium(topLayer) + Number.EPSILON) * 100) / 100,
+      organicMatter: Math.round((topLayer.organicCarbon * 1.724 + Number.EPSILON) * 100) / 100,
       texture: profile.textureClass,
       drainage: profile.drainageClass,
     };
@@ -227,6 +233,7 @@ export async function fetchLegacySoilData(lat: number, lon: number): Promise<Leg
  * Parse SoilGrids layers into structured data
  */
 function parseSoilLayers(layers: SoilGridsLayer[], depths: SoilDepth[]): SoilLayerData[] {
+  const round2 = (v: number) => Math.round((v + Number.EPSILON) * 100) / 100;
   const getValueForDepth = (propName: string, depthLabel: string): number => {
     const layer = layers.find(l => l.name === propName);
     if (!layer) return 0;
@@ -237,22 +244,22 @@ function parseSoilLayers(layers: SoilGridsLayer[], depths: SoilDepth[]): SoilLay
   return depths.map(depth => {
     const fieldCapacity = getValueForDepth('wv0033', depth) / 10; // 0.1 v%/v% to %
     const wiltingPoint = getValueForDepth('wv1500', depth) / 10;
-    
+
     return {
       depth,
-      clay: getValueForDepth('clay', depth) / 10,
-      sand: getValueForDepth('sand', depth) / 10,
-      silt: getValueForDepth('silt', depth) / 10,
-      pH: getValueForDepth('phh2o', depth) / 10,
-      nitrogen: getValueForDepth('nitrogen', depth) / 100,
-      organicCarbon: getValueForDepth('soc', depth) / 10,
-      cec: getValueForDepth('cec', depth) / 10,
-      bulkDensity: getValueForDepth('bdod', depth) / 100,
-      coarseFragments: getValueForDepth('cfvo', depth) / 10,
+      clay: round2(getValueForDepth('clay', depth) / 10),
+      sand: round2(getValueForDepth('sand', depth) / 10),
+      silt: round2(getValueForDepth('silt', depth) / 10),
+      pH: round2(getValueForDepth('phh2o', depth) / 10),
+      nitrogen: round2(getValueForDepth('nitrogen', depth) / 100),
+      organicCarbon: round2(getValueForDepth('soc', depth) / 10),
+      cec: round2(getValueForDepth('cec', depth) / 10),
+      bulkDensity: round2(getValueForDepth('bdod', depth) / 100),
+      coarseFragments: round2(getValueForDepth('cfvo', depth) / 10),
       waterRetention: {
-        fieldCapacity,
-        wiltingPoint,
-        availableWater: Math.max(0, fieldCapacity - wiltingPoint),
+        fieldCapacity: round2(fieldCapacity),
+        wiltingPoint: round2(wiltingPoint),
+        availableWater: round2(Math.max(0, fieldCapacity - wiltingPoint)),
       },
     };
   });
@@ -283,6 +290,7 @@ function buildSoilProfile(lat: number, lon: number, layers: SoilLayerData[]): So
   
   // Generate recommendations
   const recommendations = generateSoilRecommendations(topLayer, avgPH, fertilityRating, textureClass);
+  const round2 = (v: number) => Math.round((v + Number.EPSILON) * 100) / 100;
 
   return {
     location: { lat, lon },
@@ -291,10 +299,10 @@ function buildSoilProfile(lat: number, lon: number, layers: SoilLayerData[]): So
     drainageClass,
     fertilityRating,
     summary: {
-      avgPH: Math.round(avgPH * 10) / 10,
-      avgOrganicMatter: Math.round(avgOC * 1.724 * 10) / 10, // OC to OM
-      avgNitrogen: Math.round(avgN * 100) / 100,
-      soilHealthScore: Math.round(soilHealthScore),
+      avgPH: round2(avgPH),
+      avgOrganicMatter: round2(avgOC * 1.724), // OC to OM
+      avgNitrogen: round2(avgN),
+      soilHealthScore: round2(soilHealthScore),
       recommendations,
     },
   };
@@ -431,6 +439,12 @@ function calculateSoilHealthScore(layer: SoilLayerData, avgPH: number, avgOC: nu
   return Math.min(100, score);
 }
 
+// Ensure soil health score is reported to 2 decimal places where used
+function calculateSoilHealthScoreRounded(layer: SoilLayerData, avgPH: number, avgOC: number): number {
+  const raw = calculateSoilHealthScore(layer, avgPH, avgOC);
+  return round2(raw);
+}
+
 /**
  * Generate actionable soil recommendations
  */
@@ -501,7 +515,8 @@ function estimatePhosphorus(layer: SoilLayerData): number {
   const baseP = 15;
   const ocBonus = layer.organicCarbon * 0.8;
   const cecBonus = layer.cec * 0.3;
-  return Math.round(baseP + ocBonus + cecBonus);
+  const val = baseP + ocBonus + cecBonus;
+  return Math.round((val + Number.EPSILON) * 100) / 100;
 }
 
 /**
@@ -512,7 +527,19 @@ function estimatePotassium(layer: SoilLayerData): number {
   const baseK = 100;
   const clayBonus = layer.clay * 2;
   const cecBonus = layer.cec * 4;
-  return Math.round(baseK + clayBonus + cecBonus);
+  const val = baseK + clayBonus + cecBonus;
+  return Math.round((val + Number.EPSILON) * 100) / 100;
+}
+
+/**
+ * Estimate calcium (Ca) from clay and CEC as a rough proxy
+ */
+function estimateCalcium(layer: SoilLayerData): number {
+  const baseCa = 300; // baseline mg/kg proxy
+  const clayBonus = layer.clay * 3;
+  const cecBonus = layer.cec * 6;
+  const val = baseCa + clayBonus + cecBonus;
+  return Math.round((val + Number.EPSILON) * 100) / 100;
 }
 
 /**
@@ -563,5 +590,6 @@ export function assessSpeciesSuitability(
     notes.push('Species can thrive in current soil conditions');
   }
   
-  return { score: Math.min(100, Math.max(0, score)), notes };
+  const bounded = Math.min(100, Math.max(0, score));
+  return { score: round2(bounded), notes };
 }
