@@ -1,0 +1,216 @@
+{
+  "document_info": {
+    "title": "Global Reforestation Species Database",
+    "description": "A comprehensive list of tree and vegetation species suitable for reforestation, detailed by climatic suitability, stress tolerance, and environmental impact.",
+    "version": "1.0",
+    "categories_covered": [
+      "Tropical",
+      "Temperate",
+      "Arid/Semi-Arid",
+      "Wetland/Coastal",
+      "Urban/High Pollution"
+    ]
+  },
+  "species_list": [
+    {
+      "id": 1,
+      "common_name": "Neem",
+      "scientific_name": "Azadirachta indica",
+      "climatic_region": "Tropical and Subtropical (Arid to Semi-humid)",
+      "stress_tolerance": {
+        "drought": "High - Can survive in regions with rainfall as low as 400mm.",
+        "flood": "Low - Does not tolerate waterlogging well.",
+        "frost": "Low - Susceptible to freezing temperatures.",
+        "high_aqi": "High - Excellent at trapping dust and absorbing pollutants.",
+        "nutrient_depletion": "High - Thrives in rocky, shallow, and poor soils."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Moderate to High. Rapid biomass accumulation in early years.",
+        "soil_profile": "improves soil fertility by reducing acidity and mining nutrients from deep soil layers. Leaves act as natural mulch.",
+        "water_cycle": "Deep taproot system helps stabilize the water table.",
+        "air_quality": "Releases high amounts of oxygen and acts as a natural air purifier against SO2 and NO2.",
+        "maturation_impact": "As a sapling, it acts as a soil binder. As a mature tree, it provides a dense canopy that significantly lowers ambient ground temperature and supports insect biodiversity."
+      }
+    },
+    {
+      "id": 2,
+      "common_name": "Pedunculate Oak",
+      "scientific_name": "Quercus robur",
+      "climatic_region": "Temperate (Europe, parts of Asia)",
+      "stress_tolerance": {
+        "drought": "Moderate - Deep rooting allows survival in dry spells once established.",
+        "flood": "Moderate - Can tolerate intermittent flooding.",
+        "frost": "High - Very hardy against cold winters.",
+        "high_aqi": "Moderate - Can tolerate urban environments but sensitive to acute smog.",
+        "nutrient_depletion": "Moderate - Prefers deep, fertile soil but adapts to heavy clay."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Very High. Long-lived species that stores carbon for centuries.",
+        "soil_profile": "Leaf litter creates rich humus, significantly improving topsoil quality over decades.",
+        "water_cycle": "High transpiration rates contribute to cloud formation; roots prevent erosion.",
+        "air_quality": "Filters particulate matter efficiently due to large leaf surface area.",
+        "maturation_impact": "Saplings require protection from herbivores. Mature trees become 'keystone species,' supporting more wildlife (birds, insects, fungi) than almost any other tree type."
+      }
+    },
+    {
+      "id": 3,
+      "common_name": "Red Mangrove",
+      "scientific_name": "Rhizophora mangle",
+      "climatic_region": "Tropical and Subtropical Coasts/Estuaries",
+      "stress_tolerance": {
+        "drought": "N/A - Adapted to saline water, but sensitive to hypersalinity if freshwater flow stops.",
+        "flood": "Extreme - Lives permanently in waterlogged, tidal zones.",
+        "frost": "Low - Cannot survive freezing temperatures.",
+        "high_aqi": "Moderate.",
+        "nutrient_depletion": "High - Adapted to anaerobic, nutrient-poor coastal soils."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Extreme (Blue Carbon). Sequesters carbon in sediment 10x faster than terrestrial forests.",
+        "soil_profile": "Builds land by trapping sediment in prop roots; prevents coastal erosion.",
+        "water_cycle": "Filters runoff water, removing nitrates and phosphates before they reach the ocean.",
+        "air_quality": "Local cooling effect on coastal zones.",
+        "maturation_impact": "Saplings stabilize immediate mudflats. Mature forests act as critical barriers against storm surges and tsunamis, protecting inland areas."
+      }
+    },
+    {
+      "id": 4,
+      "common_name": "Baobab",
+      "scientific_name": "Adansonia digitata",
+      "climatic_region": "Hot, Arid Savannas (Africa, Australia)",
+      "stress_tolerance": {
+        "drought": "Extreme - Stores thousands of liters of water in its trunk.",
+        "flood": "Low - Susceptible to root rot.",
+        "frost": "Low.",
+        "high_aqi": "Low to Moderate.",
+        "nutrient_depletion": "High - Thrives in poor, rocky soils."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Moderate per tree, but critical in sparse landscapes.",
+        "soil_profile": "Prevents desertification; fallen leaves enrich poor savanna soils.",
+        "water_cycle": "Acts as a living reservoir, maintaining local humidity.",
+        "air_quality": "Minor direct filtration, but stabilizes dust.",
+        "maturation_impact": "Saplings are slow-growing. Mature trees create distinct micro-ecosystems, providing shade and shelter for hundreds of species in harsh heat."
+      }
+    },
+    {
+      "id": 5,
+      "common_name": "Giant Bamboo",
+      "scientific_name": "Dendrocalamus asper",
+      "climatic_region": "Tropical and Subtropical (High humidity)",
+      "stress_tolerance": {
+        "drought": "Moderate - Rhizomes can survive dry spells, though growth slows.",
+        "flood": "Moderate - Can tolerate short-term waterlogging.",
+        "frost": "Low to Moderate (depending on species).",
+        "high_aqi": "High - Very efficient photosynthesis.",
+        "nutrient_depletion": "High - Can reclaim degraded land rapidly."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Extreme (Short-term). Absorbs carbon 4x faster than many hardwood trees.",
+        "soil_profile": "Extensive root mat prevents landslides and severe erosion.",
+        "water_cycle": "Raises water table by reducing runoff speed.",
+        "air_quality": "Releases 35% more oxygen than equivalent stands of trees.",
+        "maturation_impact": "Reaches full height in months/years rather than decades. Rapidly creates canopy cover, protecting soil from UV radiation and heavy rain impact."
+      }
+    },
+    {
+      "id": 6,
+      "common_name": "London Plane",
+      "scientific_name": "Platanus × acerifolia",
+      "climatic_region": "Temperate Urban Zones",
+      "stress_tolerance": {
+        "drought": "High - Highly adaptable root system.",
+        "flood": "Moderate.",
+        "frost": "High.",
+        "high_aqi": "Extreme - Specifically adapted to shed bark, removing absorbed pollutants.",
+        "nutrient_depletion": "High - Tolerates compacted, poor urban soils."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Moderate.",
+        "soil_profile": "Can break up compacted soil over time.",
+        "water_cycle": "Manages storm water runoff in paved areas.",
+        "air_quality": "Exceptional at trapping particulate matter (PM2.5/PM10) on hairy leaves and bark.",
+        "maturation_impact": "Saplings are robust. Mature trees provide massive shade canopies (reducing urban heat island effect) and are resilient to physical damage."
+      }
+    },
+    {
+      "id": 7,
+      "common_name": "Bald Cypress",
+      "scientific_name": "Taxodium distichum",
+      "climatic_region": "Wetlands / Riparian Zones (North America)",
+      "stress_tolerance": {
+        "drought": "Moderate - Surprisingly drought tolerant once established.",
+        "flood": "Extreme - Can live permanently in standing water.",
+        "frost": "Moderate.",
+        "high_aqi": "Moderate.",
+        "nutrient_depletion": "Moderate."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "High - Long lifespan leads to significant biomass storage.",
+        "soil_profile": "Knees (pneumatophores) trap sediment and stabilize river banks.",
+        "water_cycle": "Filters pollutants from river water; slows floodwaters.",
+        "air_quality": "General air purification.",
+        "maturation_impact": "As it matures, it develops a buttressed base that acts as a physical barrier against water flow erosion, critical for maintaining wetland integrity."
+      }
+    },
+    {
+      "id": 8,
+      "common_name": "Scots Pine",
+      "scientific_name": "Pinus sylvestris",
+      "climatic_region": "Boreal and Temperate (Cold climates)",
+      "stress_tolerance": {
+        "drought": "High - Adapted to sandy, well-drained soils.",
+        "flood": "Low.",
+        "frost": "Extreme - Survives sub-arctic winters.",
+        "high_aqi": "Moderate - Can suffer in high sulfur dioxide areas.",
+        "nutrient_depletion": "High - Needs very little nitrogen to thrive."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "High - Dense wood stores significant carbon in cold climates.",
+        "soil_profile": "Needle drop acidifies soil (can be negative for some flora, good for fungi).",
+        "water_cycle": "Canopy intercepts heavy snowfall, regulating meltwater release.",
+        "air_quality": "Produces terpenes which interact with atmospheric chemistry; filters dust year-round.",
+        "maturation_impact": "Saplings are pioneer species in open ground. Mature stands create a unique microclimate that shelters understory species from wind and extreme cold."
+      }
+    },
+    {
+      "id": 9,
+      "common_name": "Vetiver Grass",
+      "scientific_name": "Chrysopogon zizanioides",
+      "climatic_region": "Tropical/Subtropical (Global adaptation)",
+      "stress_tolerance": {
+        "drought": "High - Roots penetrate up to 3-4 meters.",
+        "flood": "High - Can survive complete submergence for weeks.",
+        "frost": "Low to Moderate.",
+        "high_aqi": "High.",
+        "nutrient_depletion": "Extreme - Grows in toxic, saline, or metal-heavy soils."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "Moderate (Soil Carbon). Sequesters carbon deep in the soil profile via roots.",
+        "soil_profile": "The gold standard for erosion control; anchors soil on steep slopes.",
+        "water_cycle": "Increases groundwater recharge by 20-30% by slowing runoff.",
+        "air_quality": "N/A.",
+        "maturation_impact": "Non-invasive (sterile seeds). Forms a dense hedge that physically blocks sediment runoff and treats wastewater by absorbing nitrates and phosphates."
+      }
+    },
+    {
+      "id": 10,
+      "common_name": "Eastern Cottonwood",
+      "scientific_name": "Populus deltoides",
+      "climatic_region": "Temperate Riparian",
+      "stress_tolerance": {
+        "drought": "Low - Requires access to water table.",
+        "flood": "High - Adapted to floodplains.",
+        "frost": "High.",
+        "high_aqi": "Moderate.",
+        "nutrient_depletion": "Moderate."
+      },
+      "environmental_effects": {
+        "carbon_sequestration": "High rate (fast growth), but shorter lifespan than oaks.",
+        "soil_profile": "Rapid leaf turnover builds topsoil quickly.",
+        "water_cycle": "High water uptake can help drain swampy areas.",
+        "air_quality": "Good filtration, though produces pollen (allergen).",
+        "maturation_impact": "Acts as a 'nurse tree' providing quick shade that allows slower-growing, long-term species (like hardwoods) to establish underneath."
+      }
+    }
+  ]
+}
