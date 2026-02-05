@@ -12,6 +12,7 @@ import {
   MapPin,
   Scan,
   Leaf,
+  Search,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +25,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import { Input } from '@/components/ui/input'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -308,16 +310,20 @@ export function MapCanvas({
   const [activeLayer, setActiveLayer] = useState<
     'osm' | 'satellite' | 'terrain'
   >('satellite')
-  const [showForestCover, setShowForestCover] = useState(true)
-  const [showStateBoundaries, setShowStateBoundaries] = useState(true)
-  const [showProtectedAreas, setShowProtectedAreas] = useState(false)
-  const [showForestZones, setShowForestZones] = useState(true) // New: Show Indian forest zones by default
+  const [showForestCover, setShowForestCover] = useState(true) // Keep general forest ON
+  const [showStateBoundaries, setShowStateBoundaries] = useState(false) // Default OFF
+  const [showProtectedAreas, setShowProtectedAreas] = useState(false) // Default OFF
+  const [showForestZones, setShowForestZones] = useState(false) // Default OFF
   const [overlayUrl, setOverlayUrl] = useState<string | null>(null)
   const [detectedSites, setDetectedSites] = useState<AfforestationSite[]>([])
   const [selectedSite, setSelectedSite] = useState<AfforestationSite | null>(
     null
   )
   const [isClient, setIsClient] = useState(false)
+  
+  // Search state
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
 
   const mapContainerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<L.Map | null>(null)
@@ -735,6 +741,39 @@ export function MapCanvas({
     mapRef.current.setView([lat, lng], mapRef.current.getZoom())
   }, [lat, lng, radius])
 
+  // Search for location
+  const handleSearch = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!searchQuery.trim() || !mapRef.current) return
+
+    setIsSearching(true)
+    try {
+      // Use Nominatim (OpenStreetMap) geocoding API
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=1`
+      )
+      const data = await response.json()
+
+      if (data && data.length > 0) {
+        const { lat: searchLat, lon: searchLon } = data[0]
+        const newLat = parseFloat(searchLat)
+        const newLng = parseFloat(searchLon)
+        
+        // Update map view and trigger location click
+        mapRef.current.setView([newLat, newLng], 13)
+        onLocationClick(newLat, newLng)
+        setSearchQuery('') // Clear search
+      } else {
+        alert('Location not found. Try a different search term.')
+      }
+    } catch (error) {
+      console.error('Search failed:', error)
+      alert('Search failed. Please try again.')
+    } finally {
+      setIsSearching(false)
+    }
+  }, [searchQuery, onLocationClick])
+
   // Load suitability overlay and detect sites
   const loadSuitabilityOverlay = useCallback(async () => {
     if (!mapRef.current) return
@@ -877,6 +916,31 @@ export function MapCanvas({
         className="h-full w-full"
         style={{ minHeight: '100%' }}
       />
+
+      {/* Search Bar - Top Center */}
+      <div className="absolute left-1/2 top-4 z-[1000] -translate-x-1/2">
+        <form onSubmit={handleSearch} className="flex gap-2">
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="Search location..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-64 bg-card/90 backdrop-blur-sm border-border/50 pr-10"
+              disabled={isSearching}
+            />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          </div>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={isSearching || !searchQuery.trim()}
+            className="bg-primary/90 backdrop-blur-sm"
+          >
+            {isSearching ? 'Searching...' : 'Go'}
+          </Button>
+        </form>
+      </div>
 
       {/* Map Controls - Top Right */}
       <div className="absolute right-4 top-4 z-[1000] flex flex-col gap-2">
