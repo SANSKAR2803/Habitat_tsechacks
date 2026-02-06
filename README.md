@@ -1,17 +1,98 @@
 # 🌲 Habitat - Adaptive Reforestation Platform
+## 🎥 Project Demo Video
+
+[![Habitat Demo Video](https://img.youtube.com/vi/PVFCDZHA3nM/maxresdefault.jpg)](https://www.youtube.com/watch?v=PVFCDZHA3nM)
 
 <div align="center">
 
-![Habitat Banner](https://img.shields.io/badge/Habitat-Reforestation-green?style=for-the-badge&logo=leaf&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js_16-black?style=for-the-badge&logo=next.js&logoColor=white)
+![Habitat Banner](https://img.shields.io/badge/🌲_Habitat-Reforestation_Platform-228B22?style=for-the-badge&labelColor=0d1117)
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white)
+![AI Powered](https://img.shields.io/badge/AI_Powered-FF6F61?style=for-the-badge&logo=openai&logoColor=white)
 
-**A GIS-powered intelligent reforestation planning and monitoring platform**
+### 🌍 **A GIS-powered intelligent reforestation planning and monitoring platform**
 
-*Built for TSec Hacks Hackathon*
+_🏆 Built for TSec Hacks Hackathon_
 
-[Features](#-features) • [Architecture](#-system-architecture) • [User Flow](#-user-journey-flow) • [API Reference](#-api-endpoints) • [Setup](#-quick-start)
+[🚀 Features](#-key-features) • [🏗️ Architecture](#️-system-architecture) • [📸 Screenshots](#-screenshots--demo) • [🛠️ Setup](#-quick-start)
+
+---
+
+### 🌟 **Transform Deforested Lands into Thriving Ecosystems**
+
+</div>
+
+---
+
+## 📸 Screenshots & Demo
+
+<div align="center">
+
+### 🗺️ **Main Dashboard - Planning Phase**
+
+_Interactive map view with India-centric focus, forest zone overlays, and sector analysis_
+
+![Planning Phase - Main Dashboard](Images/Screenshot%202026-02-05%20102515.png)
+
+> 📍 **What's happening here?**  
+> The main dashboard shows an interactive Leaflet map centered on India. Users can click anywhere on the map to analyze that location. The left panel displays the map with forest zone overlays (Western Ghats, Eastern Ghats, Central Highlands shown in different colors). The right panel shows sector analysis controls where users can input coordinates and radius for detailed analysis.
+
+---
+
+### 📊 **Ecosystem Monitoring Dashboard**
+
+_Real-time health metrics, NDVI analysis, and environmental indicators_
+
+![Monitoring Dashboard](Images/Screenshot%202026-02-05%20102756.png)
+
+> 📈 **What's happening here?**  
+> After selecting a location, the monitoring phase displays a comprehensive ecosystem health score (0-100) calculated using a weighted formula. Six key metrics are shown: NDVI (vegetation), Moisture Index, Temperature, Air Quality Index (AQI), Forest Cover %, and Soil pH. Each metric card shows current values with color-coded status indicators and impact warnings when values are outside optimal ranges.
+
+---
+
+### 📉 **Historical Trends & Analysis**
+
+_12-month historical data visualization with trend charts_
+
+![Trends and Historical Analysis](Images/Screenshot%202026-02-05%20102923.png)
+
+> 📊 **What's happening here?**  
+> This view shows historical ecosystem data over 12 months using Recharts visualization. The trends chart helps users identify patterns in NDVI, moisture, temperature, and other metrics over time. This historical context is crucial for understanding seasonal variations and detecting long-term degradation or improvement in ecosystem health.
+
+---
+
+### ⚠️ **Risk Advisory & Species Recommendations**
+
+_AI-powered risk assessment with drought/flood predictions and species suggestions_
+
+![Risk Advisory Panel](Images/Screenshot%202026-02-05%20103045.png)
+
+> 🌡️ **What's happening here?**  
+> The Risk Advisory panel analyzes current conditions to predict potential risks (drought, flood, heat wave). Based on the analysis, the system recommends suitable tree species for reforestation with suitability scores. For example, Neem might show 92% suitability for drought-prone areas. The panel also suggests actionable solutions like irrigation methods and soil management techniques.
+
+---
+
+### 🔬 **Calamity Simulation**
+
+_Model the impact of natural disasters on your reforestation plans_
+
+![Calamity Simulator](Images/Screenshot%202026-02-05%20103115.png)
+
+> 🌪️ **What's happening here?**  
+> The Simulation phase allows users to model "what-if" scenarios. Select a calamity type (drought, flood, heat wave, frost, or pest outbreak), set severity (0-100%), and duration (weeks). The system simulates the impact on planted species, showing survival rates, recovery time estimates, and mitigation recommendations. This helps planners prepare contingency strategies.
+
+---
+
+### 🤖 **AI Chat Assistant**
+
+_Natural language interface for ecosystem queries and recommendations_
+
+![AI Chat Interface](Images/Screenshot%202026-02-05%20103501.png)
+
+> 💬 **What's happening here?**  
+> The AI Chat assistant (powered by OpenAI GPT-4 or Google Gemini) provides a conversational interface. Users can ask questions like "What trees should I plant here?" or "What's the current NDVI for this region?". The AI has tool-calling capabilities to fetch real-time data and provide context-aware, actionable recommendations.
 
 </div>
 
@@ -19,16 +100,17 @@
 
 ## 📋 Table of Contents
 
-1. [Overview](#-overview)
-2. [Features](#-features)
-3. [System Architecture](#-system-architecture)
-4. [User Journey Flow](#-user-journey-flow)
-5. [Data Flow](#-data-flow)
-6. [Phase Breakdown](#-phase-breakdown)
-7. [API Endpoints](#-api-endpoints)
-8. [Tech Stack](#-tech-stack)
-9. [Quick Start](#-quick-start)
-10. [API Keys Setup](#-api-keys-setup)
+| #   | Section                                          | Description                        |
+| --- | ------------------------------------------------ | ---------------------------------- |
+| 1   | [🎯 Overview](#-overview)                        | What is Habitat and why it matters |
+| 2   | [✨ Key Features](#-key-features)                | All platform capabilities          |
+| 3   | [🏗️ System Architecture](#️-system-architecture) | Technical design & data flow       |
+| 4   | [🚀 User Journey](#-user-journey-flow)           | Step-by-step usage guide           |
+| 5   | [📊 Phase Details](#-phase-breakdown)            | Deep dive into each phase          |
+| 6   | [🔌 API Reference](#-api-endpoints)              | All available endpoints            |
+| 7   | [🛠️ Tech Stack](#️-tech-stack)                   | Technologies used                  |
+| 8   | [⚡ Quick Start](#-quick-start)                  | Get running in minutes             |
+| 9   | [🔑 API Keys](#-api-keys-setup)                  | External service configuration     |
 
 ---
 
@@ -36,134 +118,161 @@
 
 **Habitat** is an intelligent, GIS-powered adaptive reforestation platform that helps environmental planners, researchers, and organizations make data-driven decisions for ecosystem restoration in India.
 
-The platform combines real-time satellite imagery, weather data, soil analysis, and AI-powered recommendations to provide comprehensive reforestation planning, monitoring, and prediction capabilities.
+The platform combines **real-time satellite imagery**, **weather data**, **soil analysis**, and **AI-powered recommendations** to provide comprehensive reforestation planning, monitoring, and prediction capabilities.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              HABITAT PLATFORM                                │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│    📍 SELECT LOCATION    →    📊 ANALYZE DATA    →    🌱 PLAN & MONITOR     │
-│                                                                              │
-│    User clicks on map         Fetch satellite,        View recommendations, │
-│    or enters coordinates      weather, soil data      track ecosystem health│
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                           🌲 HABITAT PLATFORM 🌲                               ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║   📍 SELECT LOCATION      →     📊 ANALYZE DATA      →     🌱 PLAN & MONITOR  ║
+║   ═════════════════           ═══════════════            ════════════════    ║
+║   • Click on map              • Satellite imagery        • View health score  ║
+║   • Enter coordinates         • Weather data             • Track metrics      ║
+║   • Define radius             • Soil composition         • Get AI advice      ║
+║                               • Forest cover             • Simulate scenarios ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
+
+### 💡 Why Habitat?
+
+| Problem                          | Habitat's Solution                |
+| -------------------------------- | --------------------------------- |
+| 🌍 Unplanned reforestation fails | 📊 Data-driven site selection     |
+| 🌡️ No real-time monitoring       | 📡 Live satellite & weather feeds |
+| 🌪️ Unprepared for calamities     | 🔬 Simulation & risk prediction   |
+| 🤔 Species selection guesswork   | 🤖 AI-powered recommendations     |
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### 🗺️ **Planning Phase**
-- Interactive map with India-centric view
-- Click-to-analyze any location
-- Forest zone overlays (Western Ghats, Eastern Ghats, Central Highlands)
-- Afforestation site marking
-- Sector-wise analysis with recommendations
+### 🗺️ **Phase 1: Planning**
 
-### 📊 **Monitoring Phase**
-- Real-time ecosystem health score (weighted formula)
-- 6 key environmental metrics with impact warnings
-- Historical trends visualization (12-month data)
-- **Risk Advisory** with drought/flood predictions
-- Species recommendations based on conditions
-- Actionable irrigation and soil solutions
+| Feature              | Description                                                 |
+| -------------------- | ----------------------------------------------------------- |
+| 🗺️ Interactive Map   | India-centric Leaflet map with click-to-analyze             |
+| 🟢 Forest Overlays   | GeoJSON layers for Western/Eastern Ghats, Central Highlands |
+| 📍 Location Analysis | Instant data fetch for any coordinates                      |
+| 🌲 Species Selection | AI-recommended trees based on conditions                    |
+| 📌 Site Marking      | Mark and track afforestation sites                          |
 
-### 🔬 **Simulation Phase**
-- Calamity impact modeling (drought, flood, heat wave, frost, pest outbreak)
-- Species survival rate predictions
-- Recovery time estimations
-- Mitigation recommendations
+### 📊 **Phase 2: Monitoring**
 
-### 🔮 **Prediction Phase**
-- AI-powered ecosystem forecasts
-- NDVI trend predictions
-- Risk factor analysis
-- Optimal action recommendations
+| Feature            | Description                                 |
+| ------------------ | ------------------------------------------- |
+| 💚 Health Score    | Weighted ecosystem score (0-100)            |
+| 📈 6 Key Metrics   | NDVI, Moisture, Temp, AQI, Forest Cover, pH |
+| ⚠️ Impact Warnings | Color-coded alerts for out-of-range values  |
+| 📉 12-Month Trends | Historical visualization with Recharts      |
+| 🚨 Risk Advisory   | Drought/Flood/Heat predictions              |
+
+### 🔬 **Phase 3: Simulation**
+
+| Feature            | Description                                     |
+| ------------------ | ----------------------------------------------- |
+| 🌪️ Calamity Types  | Drought, Flood, Heat Wave, Frost, Pest Outbreak |
+| 📉 Impact Modeling | Species survival rate predictions               |
+| ⏱️ Recovery Time   | Estimated recovery periods                      |
+| 💡 Mitigation Tips | Actionable recommendations                      |
+
+### 🔮 **Phase 4: Prediction**
+
+| Feature           | Description                            |
+| ----------------- | -------------------------------------- |
+| 🔮 AI Forecasts   | Machine learning ecosystem predictions |
+| 📈 NDVI Trends    | 3-12 month vegetation forecasts        |
+| ⚠️ Risk Factors   | Seasonal risk analysis                 |
+| 🌳 Carbon Capture | 5-20 year sequestration estimates      |
 
 ### 🤖 **AI Assistant**
-- Natural language chat interface
-- Context-aware recommendations
-- Tool-calling capabilities for real-time data
+
+| Feature             | Description                       |
+| ------------------- | --------------------------------- |
+| 💬 Natural Language | Chat in plain English/Hindi       |
+| 🔧 Tool Calling     | Real-time data fetching           |
+| 🎯 Context Aware    | Location-specific recommendations |
 
 ---
 
 ## 🏗️ System Architecture
 
+### 🔄 High-Level Architecture Diagram
+
 ```mermaid
 flowchart TB
     subgraph Frontend["🖥️ FRONTEND (Next.js App Router)"]
-        UI[React Components]
-        Map[Leaflet Map Canvas]
-        Charts[Recharts Visualization]
-        
+        UI["⚛️ React Components"]
+        Map["🗺️ Leaflet Map Canvas"]
+        Charts["📊 Recharts Visualization"]
+
         UI --> Map
         UI --> Charts
     end
-    
+
     subgraph APIRoutes["⚡ NEXT.JS API ROUTES"]
-        Monitoring["/api/monitoring"]
-        Satellite["/api/satellite"]
-        Weather["/api/weather"]
-        Soil["/api/soil"]
-        Species["/api/species"]
-        Predictions["/api/predictions"]
-        Chat["/api/chat"]
-        Sector["/api/sector"]
+        Monitoring["📊 /api/monitoring"]
+        Satellite["🛰️ /api/satellite"]
+        Weather["🌤️ /api/weather"]
+        Soil["🌱 /api/soil"]
+        Species["🌲 /api/species"]
+        Predictions["🔮 /api/predictions"]
+        Chat["🤖 /api/chat"]
+        Sector["📍 /api/sector"]
     end
-    
+
     subgraph ExternalAPIs["🌐 EXTERNAL DATA SOURCES"]
-        Sentinel["Sentinel Hub<br/>(NDVI/NDMI Satellite)"]
-        OpenWeather["OpenWeather API<br/>(Weather Data)"]
-        SoilGrids["SoilGrids API<br/>(Soil Composition)"]
-        GFW["Global Forest Watch<br/>(Deforestation Alerts)"]
-        OpenAI["OpenAI/Gemini<br/>(AI Chat)"]
+        Sentinel["🛰️ Sentinel Hub<br/>(NDVI/NDMI Satellite)"]
+        OpenWeather["⛅ OpenWeather API<br/>(Weather Data)"]
+        SoilGrids["🌱 SoilGrids API<br/>(Soil Composition)"]
+        GFW["🌳 Global Forest Watch<br/>(Deforestation Alerts)"]
+        OpenAI["🤖 OpenAI/Gemini<br/>(AI Chat)"]
     end
-    
+
     Frontend --> APIRoutes
     APIRoutes --> ExternalAPIs
 ```
 
-### Component Architecture
+### 🧩 Component Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            app/page.tsx (Main Dashboard)                      │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        Phase Navigation                              │   │
-│  │   [Planning] [Monitoring] [Simulation] [Prediction]                  │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-│  ┌─────────────────────────┐  ┌─────────────────────────────────────────┐  │
-│  │      Map Canvas         │  │            Side Panel                    │  │
-│  │  (Leaflet + GeoJSON)    │  │  ┌─────────────────────────────────┐   │  │
-│  │                         │  │  │  HealthGauge                     │   │  │
-│  │  • India-centric view   │  │  │  (Ecosystem Score 0-100)         │   │  │
-│  │  • Forest zone overlays │  │  └─────────────────────────────────┘   │  │
-│  │  • Click-to-analyze     │  │  ┌─────────────────────────────────┐   │  │
-│  │  • Afforestation sites  │  │  │  MetricCards (6 metrics)        │   │  │
-│  │                         │  │  │  • NDVI • Moisture • Temp        │   │  │
-│  └─────────────────────────┘  │  │  • AQI • Forest Cover • pH       │   │  │
-│                                │  └─────────────────────────────────┘   │  │
-│                                │  ┌─────────────────────────────────┐   │  │
-│                                │  │  TrendsChart (12-month history) │   │  │
-│                                │  └─────────────────────────────────┘   │  │
-│                                │  ┌─────────────────────────────────┐   │  │
-│                                │  │  RiskAdvisory                   │   │  │
-│                                │  │  • Drought/Flood/Heat alerts    │   │  │
-│                                │  │  • Species recommendations      │   │  │
-│                                │  │  • Irrigation solutions         │   │  │
-│                                │  └─────────────────────────────────┘   │  │
-│                                └─────────────────────────────────────────┘  │
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        AI Chat (Collapsible)                         │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
+╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                        📱 app/page.tsx (Main Dashboard)                            ║
+╠═══════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                    ║
+║  ┌───────────────────────────────────────────────────────────────────────────┐    ║
+║  │   🧭 Phase Navigation Bar                                                  │    ║
+║  │   [📍 Planning] [📊 Monitoring] [🔬 Simulation] [🔮 Prediction]            │    ║
+║  └───────────────────────────────────────────────────────────────────────────┘    ║
+║                                                                                    ║
+║  ┌─────────────────────────────┐    ┌─────────────────────────────────────┐      ║
+║  │      🗺️ Map Canvas          │    │        📋 Side Panel                │      ║
+║  │   (Leaflet + GeoJSON)       │    │  ┌────────────────────────────────┐│      ║
+║  │                              │    │  │ 💚 HealthGauge                ││      ║
+║  │  • India-centric view        │    │  │ (Ecosystem Score 0-100)       ││      ║
+║  │  • Forest zone overlays      │    │  └────────────────────────────────┘│      ║
+║  │  • Click-to-analyze          │    │  ┌────────────────────────────────┐│      ║
+║  │  • Afforestation markers     │    │  │ 📊 MetricCards (6 metrics)    ││      ║
+║  │                              │    │  │ NDVI • Moisture • Temp         ││      ║
+║  └─────────────────────────────┘    │  │ AQI • Forest Cover • pH        ││      ║
+║                                      │  └────────────────────────────────┘│      ║
+║                                      │  ┌────────────────────────────────┐│      ║
+║                                      │  │ 📈 TrendsChart (12-month)     ││      ║
+║                                      │  └────────────────────────────────┘│      ║
+║                                      │  ┌────────────────────────────────┐│      ║
+║                                      │  │ ⚠️ RiskAdvisory               ││      ║
+║                                      │  │ • Drought/Flood/Heat alerts    ││      ║
+║                                      │  │ • Species recommendations      ││      ║
+║                                      │  │ • Irrigation solutions         ││      ║
+║                                      │  └────────────────────────────────┘│      ║
+║                                      └─────────────────────────────────────┘      ║
+║                                                                                    ║
+║  ┌───────────────────────────────────────────────────────────────────────────┐    ║
+║  │                          🤖 AI Chat (Collapsible)                          │    ║
+║  └───────────────────────────────────────────────────────────────────────────┘    ║
+║                                                                                    ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ---
@@ -173,337 +282,194 @@ flowchart TB
 ```mermaid
 flowchart LR
     subgraph Start["🏠 START"]
-        A[User Opens App]
+        A[👤 User Opens App]
     end
-    
+
     subgraph Planning["📍 PLANNING PHASE"]
-        B[View India Map]
-        C[Click Location / Enter Coords]
-        D[Analyze Sector]
-        E[View Species Recommendations]
-        F[Mark Afforestation Sites]
+        B[🗺️ View India Map]
+        C[📍 Click Location]
+        D[🔍 Analyze Sector]
     end
-    
+
     subgraph Monitoring["📊 MONITORING PHASE"]
-        G[View Health Score]
-        H[Check 6 Metrics]
-        I[View Impact Warnings]
-        J[12-Month Trends]
-        K[Risk Advisory]
+        G[💚 View Health Score]
+        H[📈 Check Metrics]
+        K[🚨 Risk Advisory]
     end
-    
-    subgraph Simulation["🔬 SIMULATION PHASE"]
-        L[Select Calamity Type]
-        M[Set Severity & Duration]
-        N[Run Simulation]
-        O[View Species Impact]
-        P[Get Recommendations]
+
+    subgraph Simulation["🔬 SIMULATION"]
+        L[🌪️ Select Calamity]
+        N[▶️ Run Simulation]
     end
-    
-    subgraph Prediction["🔮 PREDICTION PHASE"]
-        Q[View AI Forecasts]
-        R[Check Risk Factors]
-        S[Plan Actions]
+
+    subgraph Prediction["🔮 PREDICTION"]
+        Q[🔮 AI Forecasts]
+        S[📋 Plan Actions]
     end
-    
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-    K --> L
-    L --> M
-    M --> N
-    N --> O
-    O --> P
-    P --> Q
-    Q --> R
-    R --> S
-```
 
-### Detailed User Flow
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            USER JOURNEY                                      │
-└─────────────────────────────────────────────────────────────────────────────┘
-
-STEP 1: LANDING
-═══════════════
-    User opens app
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  India-centric map loads            │
-    │  Forest zone overlays displayed     │
-    │  Default: Planning phase active     │
-    └─────────────────────────────────────┘
-
-STEP 2: LOCATION SELECTION
-══════════════════════════
-    User clicks map OR enters coordinates
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  Marker placed on map               │
-    │  Loading animation starts           │
-    │  API calls initiated in parallel    │
-    └─────────────────────────────────────┘
-
-STEP 3: DATA ANALYSIS
-═════════════════════
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  Weather data fetched (OpenWeather) │
-    │  Soil data fetched (SoilGrids)      │
-    │  NDVI calculated (Sentinel Hub)     │
-    │  Forest cover analyzed (GFW)        │
-    └─────────────────────────────────────┘
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  Health Score calculated            │
-    │  (Weighted average of 6 indicators) │
-    │                                     │
-    │  Formula:                           │
-    │  NDVI×25% + Moisture×20% +          │
-    │  Temperature×15% + AQI×10% +        │
-    │  Forest Cover×20% + Soil×10%        │
-    └─────────────────────────────────────┘
-
-STEP 4: MONITORING VIEW
-═══════════════════════
-    Switch to Monitoring phase
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  View ecosystem health gauge        │
-    │  6 metric cards with impact info    │
-    │  Historical trends (12 months)      │
-    │  Risk advisory with predictions     │
-    └─────────────────────────────────────┘
-
-STEP 5: RISK ASSESSMENT
-═══════════════════════
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  Drought/Flood/Heat risk calculated │
-    │  Based on: rainfall, temp, humidity,│
-    │  NDVI, moisture levels              │
-    │                                     │
-    │  If risk > threshold:               │
-    │  → Show recommended species         │
-    │  → Show irrigation solutions        │
-    │  → Show soil management tips        │
-    └─────────────────────────────────────┘
-
-STEP 6: SIMULATION (Optional)
-═════════════════════════════
-    Switch to Simulation phase
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  Select calamity type               │
-    │  (drought/flood/heat/frost/pest)    │
-    │  Set severity (0-100%)              │
-    │  Set duration (weeks)               │
-    └─────────────────────────────────────┘
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  Run simulation                     │
-    │  View species survival rates        │
-    │  View recovery time estimates       │
-    │  Get mitigation recommendations     │
-    └─────────────────────────────────────┘
-
-STEP 7: PREDICTION (Optional)
-═════════════════════════════
-    Switch to Prediction phase
-         │
-         ▼
-    ┌─────────────────────────────────────┐
-    │  View AI-powered forecasts          │
-    │  NDVI trend predictions             │
-    │  Risk factor analysis               │
-    │  Optimal action planning            │
-    └─────────────────────────────────────┘
+    A --> B --> C --> D
+    D --> G --> H --> K
+    K --> L --> N
+    N --> Q --> S
 ```
 
 ---
 
 ## 🔄 Data Flow
 
+### 📡 Data Flow Sequence
+
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant A as API Routes
-    participant W as OpenWeather
-    participant S as SoilGrids
-    participant SH as Sentinel Hub
-    participant G as Global Forest Watch
+    participant 👤 as User
+    participant 🖥️ as Frontend
+    participant ⚡ as API Routes
+    participant 🌤️ as OpenWeather
+    participant 🌱 as SoilGrids
+    participant 🛰️ as Sentinel Hub
+    participant 🌳 as Global Forest Watch
 
-    U->>F: Click on map location
-    F->>A: GET /api/monitoring?lat=X&lng=Y
-    
-    par Parallel API Calls
-        A->>W: Fetch weather data
-        A->>S: Fetch soil composition
-        A->>SH: Fetch NDVI/NDMI
-        A->>G: Fetch forest cover
+    👤->>🖥️: Click on map location
+    🖥️->>⚡: GET /api/monitoring?lat=X&lng=Y
+
+    par 📡 Parallel API Calls
+        ⚡->>🌤️: Fetch weather data
+        ⚡->>🌱: Fetch soil composition
+        ⚡->>🛰️: Fetch NDVI/NDMI
+        ⚡->>🌳: Fetch forest cover
     end
-    
-    W-->>A: Temperature, humidity, rainfall
-    S-->>A: pH, nitrogen, phosphorus
-    SH-->>A: Vegetation index
-    G-->>A: Deforestation alerts
-    
-    A->>A: Calculate health score
-    A->>A: Calculate risk advisory
-    A->>A: Generate recommendations
-    
-    A-->>F: Complete monitoring data
-    F-->>U: Display dashboard
+
+    🌤️-->>⚡: Temperature, humidity, rainfall
+    🌱-->>⚡: pH, nitrogen, phosphorus
+    🛰️-->>⚡: Vegetation index
+    🌳-->>⚡: Deforestation alerts
+
+    ⚡->>⚡: 🧮 Calculate health score
+    ⚡->>⚡: ⚠️ Calculate risk advisory
+    ⚡->>⚡: 🌲 Generate recommendations
+
+    ⚡-->>🖥️: Complete monitoring data
+    🖥️-->>👤: Display dashboard
 ```
 
-### Data Processing Pipeline
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           DATA PROCESSING PIPELINE                           │
-└─────────────────────────────────────────────────────────────────────────────┘
-
-RAW DATA SOURCES                    PROCESSING                     OUTPUT
-════════════════                    ══════════                     ══════
-
-┌──────────────┐                                              
-│ OpenWeather  │──┐                                           
-│  • Temp      │  │                                           
-│  • Humidity  │  │     ┌───────────────────┐     ┌─────────────────────┐
-│  • Rainfall  │  ├────▶│  Health Score     │────▶│  Ecosystem Score    │
-│  • Wind      │  │     │  Calculator       │     │  (0-100)            │
-└──────────────┘  │     │                   │     └─────────────────────┘
-                  │     │  Weighted Formula │
-┌──────────────┐  │     │  ───────────────  │     ┌─────────────────────┐
-│  SoilGrids   │──┤     │  NDVI × 25%       │────▶│  Metric Cards       │
-│  • pH        │  │     │  Moisture × 20%   │     │  (with impact info) │
-│  • Nitrogen  │  │     │  Temp × 15%       │     └─────────────────────┘
-│  • Organic   │  │     │  AQI × 10%        │
-└──────────────┘  │     │  Forest × 20%     │     ┌─────────────────────┐
-                  │     │  Soil × 10%       │────▶│  Historical Trends  │
-┌──────────────┐  │     └───────────────────┘     │  (12-month chart)   │
-│ Sentinel Hub │──┤                               └─────────────────────┘
-│  • NDVI      │  │
-│  • NDMI      │  │     ┌───────────────────┐     ┌─────────────────────┐
-│  • Imagery   │  ├────▶│  Risk Advisory    │────▶│  Drought/Flood Risk │
-└──────────────┘  │     │  Calculator       │     │  + Species Recs     │
-                  │     │                   │     │  + Solutions        │
-┌──────────────┐  │     │  Analyzes:        │     └─────────────────────┘
-│    GFW       │──┘     │  • Rainfall trend │
-│  • Forest %  │        │  • Temp anomalies │
-│  • Alerts    │        │  • Moisture level │
-└──────────────┘        │  • NDVI health    │
-                        └───────────────────┘
-```
+**Health Score Formula:** `NDVI×25% + Moisture×20% + Temp×15% + AQI×10% + Forest×20% + Soil×10%`
 
 ---
 
 ## 📋 Phase Breakdown
 
-### Phase 1: Planning 📍
+### 📍 Phase 1: Planning
 
-| Feature | Description |
-|---------|-------------|
-| Map View | Interactive Leaflet map centered on India |
-| Forest Overlays | GeoJSON layers for Western/Eastern Ghats, Central Highlands |
-| Location Analysis | Click-to-analyze with instant data fetch |
-| Species Selection | AI-recommended species based on conditions |
-| Site Marking | Mark and track afforestation sites |
+| Feature               | Icon | Description                                                 |
+| --------------------- | ---- | ----------------------------------------------------------- |
+| **Map View**          | 🗺️   | Interactive Leaflet map centered on India                   |
+| **Forest Overlays**   | 🌳   | GeoJSON layers for Western/Eastern Ghats, Central Highlands |
+| **Location Analysis** | 📍   | Click-to-analyze with instant data fetch                    |
+| **Species Selection** | 🌲   | AI-recommended species based on conditions                  |
+| **Site Marking**      | 📌   | Mark and track afforestation sites                          |
 
-### Phase 2: Monitoring 📊
+### 📊 Phase 2: Monitoring
 
-| Metric | Weight | Source | Impact Threshold |
-|--------|--------|--------|------------------|
-| NDVI | 25% | Sentinel Hub | < 0.3 (poor), > 0.7 (excellent) |
-| Moisture | 20% | Calculated | < 30% (drought risk), > 80% (flood risk) |
-| Temperature | 15% | OpenWeather | < 15°C or > 35°C (stress) |
-| AQI | 10% | OpenWeather | > 100 (poor), > 200 (hazardous) |
-| Forest Cover | 20% | GFW | < 20% (critical) |
-| Soil pH | 10% | SoilGrids | < 5.5 or > 8.0 (problematic) |
+| Metric              | Weight | Source       | Status Thresholds  |
+| ------------------- | ------ | ------------ | ------------------ | ---------- | ---------- |
+| 🌿 **NDVI**         | 25%    | Sentinel Hub | 🔴 < 0.3           | 🟡 0.3-0.6 | 🟢 > 0.6   |
+| 💧 **Moisture**     | 20%    | Calculated   | 🔴 < 30% / > 80%   | 🟡 30-40%  | 🟢 40-70%  |
+| 🌡️ **Temperature**  | 15%    | OpenWeather  | 🔴 < 15°C / > 35°C | 🟡 15-20°C | 🟢 20-30°C |
+| 💨 **AQI**          | 10%    | OpenWeather  | 🔴 > 150           | 🟡 100-150 | 🟢 < 100   |
+| 🌳 **Forest Cover** | 20%    | GFW          | 🔴 < 20%           | 🟡 20-40%  | 🟢 > 40%   |
+| 🌱 **Soil pH**      | 10%    | SoilGrids    | 🔴 < 5.5 / > 8.0   | 🟡 5.5-6.0 | 🟢 6.0-7.5 |
 
-### Phase 3: Simulation 🔬
+### 🔬 Phase 3: Simulation
 
-| Calamity Type | Impact Factors |
-|---------------|----------------|
-| Drought | -40% survival, extended recovery, water stress |
-| Flood | Root rot risk, soil erosion, nutrient washout |
-| Heat Wave | Leaf scorch, transpiration stress, growth halt |
-| Frost | Cell damage, dormancy trigger, tip burn |
-| Pest Outbreak | Defoliation, bark damage, disease spread |
+| Calamity Type     | Icon | Impact Factors                                 |
+| ----------------- | ---- | ---------------------------------------------- |
+| **Drought**       | ☀️   | -40% survival, extended recovery, water stress |
+| **Flood**         | 🌊   | Root rot risk, soil erosion, nutrient washout  |
+| **Heat Wave**     | 🔥   | Leaf scorch, transpiration stress, growth halt |
+| **Frost**         | ❄️   | Cell damage, dormancy trigger, tip burn        |
+| **Pest Outbreak** | 🐛   | Defoliation, bark damage, disease spread       |
 
-### Phase 4: Prediction 🔮
+### 🔮 Phase 4: Prediction
 
-| Prediction Type | Timeframe | Methodology |
-|-----------------|-----------|-------------|
-| NDVI Trend | 3-12 months | Historical pattern + climate forecast |
-| Risk Factors | Seasonal | Weather models + historical events |
-| Carbon Sequestration | 5-20 years | Growth models + species factors |
+| Prediction Type          | Icon | Timeframe   | Methodology                           |
+| ------------------------ | ---- | ----------- | ------------------------------------- |
+| **NDVI Trend**           | 📈   | 3-12 months | Historical pattern + climate forecast |
+| **Risk Factors**         | ⚠️   | Seasonal    | Weather models + historical events    |
+| **Carbon Sequestration** | 🌍   | 5-20 years  | Growth models + species factors       |
 
 ---
 
 ## 🔌 API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/monitoring` | GET | Full ecosystem metrics + risk advisory |
-| `/api/satellite` | GET | NDVI/NDMI satellite analysis |
-| `/api/weather` | GET | Current weather + forecast |
-| `/api/soil` | GET | Soil composition data |
-| `/api/species` | GET | Species recommendations |
-| `/api/predictions` | GET | AI-powered forecasts |
-| `/api/sector` | POST | Comprehensive sector analysis |
-| `/api/simulation` | POST | Calamity impact simulation |
-| `/api/chat` | POST | AI chat assistant |
-| `/api/report` | GET | Generate PDF report |
+| Endpoint           | Method | Icon | Description                            |
+| ------------------ | ------ | ---- | -------------------------------------- |
+| `/api/monitoring`  | GET    | 📊   | Full ecosystem metrics + risk advisory |
+| `/api/satellite`   | GET    | 🛰️   | NDVI/NDMI satellite analysis           |
+| `/api/weather`     | GET    | 🌤️   | Current weather + forecast             |
+| `/api/soil`        | GET    | 🌱   | Soil composition data                  |
+| `/api/species`     | GET    | 🌲   | Species recommendations                |
+| `/api/predictions` | GET    | 🔮   | AI-powered forecasts                   |
+| `/api/sector`      | POST   | 📍   | Comprehensive sector analysis          |
+| `/api/simulation`  | POST   | 🔬   | Calamity impact simulation             |
+| `/api/chat`        | POST   | 🤖   | AI chat assistant                      |
+| `/api/report`      | GET    | 📄   | Generate PDF report                    |
 
-### Example: Monitoring API Response
+### 📝 Example: Monitoring API Response
 
 ```json
 {
   "metrics": {
-    "health_score": 72.5,
-    "ndvi_current": 0.65,
-    "soil_ph": 6.8,
-    "moisture_index": 55,
-    "lst_temp": 28.5,
-    "aqi": 45,
-    "forest_cover": 42,
-    "carbon_sequestration": 180
+    "health_score": 72.5, // 💚 Overall ecosystem health
+    "ndvi_current": 0.65, // 🌿 Vegetation density
+    "soil_ph": 6.8, // 🌱 Soil acidity
+    "moisture_index": 55, // 💧 Soil moisture %
+    "lst_temp": 28.5, // 🌡️ Land surface temp
+    "aqi": 45, // 💨 Air quality index
+    "forest_cover": 42, // 🌳 Forest percentage
+    "carbon_sequestration": 180 // 🌍 Tons CO₂/hectare
   },
   "health_breakdown": {
     "vegetation": { "value": 0.65, "contribution": 16.25, "status": "good" },
-    "moisture": { "value": 55, "contribution": 11, "status": "moderate" }
+    "moisture": { "value": 55, "contribution": 11, "status": "moderate" },
+    "temperature": { "value": 28.5, "contribution": 12, "status": "good" },
+    "air_quality": { "value": 45, "contribution": 5.5, "status": "excellent" },
+    "forest_cover": { "value": 42, "contribution": 8.4, "status": "moderate" },
+    "soil_health": { "value": 6.8, "contribution": 9.3, "status": "good" }
   },
   "risk_advisory": {
     "risks": [
-      { "type": "drought", "level": "moderate", "probability": 45, "description": "..." }
+      {
+        "type": "drought",
+        "level": "moderate",
+        "probability": 45,
+        "description": "..."
+      }
     ],
     "recommendedSpecies": [
-      { "name": "Neem", "suitability": 92, "reason": "Excellent drought tolerance" }
+      {
+        "name": "Neem",
+        "suitability": 92,
+        "reason": "Excellent drought tolerance"
+      },
+      { "name": "Banyan", "suitability": 88, "reason": "Deep root system" }
     ],
     "solutions": [
-      { "title": "Install Drip Irrigation", "priority": "immediate", "category": "irrigation" }
+      {
+        "title": "Install Drip Irrigation",
+        "priority": "immediate",
+        "category": "irrigation"
+      },
+      {
+        "title": "Add Organic Mulch",
+        "priority": "recommended",
+        "category": "soil"
+      }
     ]
   },
-  "history": [...]
+  "history": [
+    { "month": "Jan", "ndvi": 0.58, "moisture": 45, "temp": 22 },
+    { "month": "Feb", "ndvi": 0.62, "moisture": 48, "temp": 25 }
+  ]
 }
 ```
 
@@ -511,54 +477,63 @@ RAW DATA SOURCES                    PROCESSING                     OUTPUT
 
 ## 🛠️ Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| **Framework** | Next.js 16 (App Router) |
-| **Language** | TypeScript |
-| **Frontend** | React 19, Tailwind CSS |
-| **UI Components** | shadcn/ui, Radix UI |
-| **Mapping** | Leaflet.js, React-Leaflet |
-| **Charts** | Recharts |
-| **AI** | OpenAI GPT-4 / Google Gemini |
-| **Satellite** | Sentinel Hub API |
-| **Weather** | OpenWeather API |
-| **Soil Data** | SoilGrids API |
-| **Forest Data** | Global Forest Watch API |
+| Category             | Technology                   | Description                     |
+| -------------------- | ---------------------------- | ------------------------------- |
+| ⚛️ **Framework**     | Next.js 16                   | React framework with App Router |
+| 📝 **Language**      | TypeScript                   | Type-safe JavaScript            |
+| 🎨 **Frontend**      | React 19 + Tailwind CSS      | Modern UI development           |
+| 🧩 **UI Components** | shadcn/ui + Radix UI         | Accessible component library    |
+| 🗺️ **Mapping**       | Leaflet.js + React-Leaflet   | Interactive maps                |
+| 📊 **Charts**        | Recharts                     | Data visualization              |
+| 🤖 **AI**            | OpenAI GPT-4 / Google Gemini | Intelligent recommendations     |
+| 🛰️ **Satellite**     | Sentinel Hub API             | NDVI/NDMI imagery               |
+| 🌤️ **Weather**       | OpenWeather API              | Real-time weather data          |
+| 🌱 **Soil Data**     | SoilGrids API                | Soil composition analysis       |
+| 🌳 **Forest Data**   | Global Forest Watch API      | Deforestation monitoring        |
 
 ---
 
-## 🚀 Quick Start
+## ⚡ Quick Start
 
-### Prerequisites
+### 📋 Prerequisites
 
-- Node.js 18+
-- pnpm (recommended) or npm
-- API keys for external services
+| Requirement           | Version   | Check Command    |
+| --------------------- | --------- | ---------------- |
+| 📦 Node.js            | 18+       | `node --version` |
+| 📦 pnpm (recommended) | Latest    | `pnpm --version` |
+| 🔑 API Keys           | See below | -                |
 
-### Installation
+### 🚀 Installation Steps
 
 ```bash
-# Clone repository
+# 1️⃣ Clone repository
 git clone https://github.com/vikasp07/hack-i.git
 cd hack-i
 
-# Install dependencies
+# 2️⃣ Install dependencies
 pnpm install
 
-# Configure environment
+# 3️⃣ Configure environment
 cp .env.example .env
-# Edit .env with your API keys
+# 📝 Edit .env with your API keys (see below)
 
-# Run development server
+# 4️⃣ Run development server
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+### 🌐 Open in Browser
 
-### Production Build
+```
+http://localhost:3000
+```
+
+### 🏗️ Production Build
 
 ```bash
+# Build for production
 pnpm build
+
+# Start production server
 pnpm start
 ```
 
@@ -566,54 +541,136 @@ pnpm start
 
 ## 🔑 API Keys Setup
 
-| Service | Purpose | Required | Get Key |
-|---------|---------|----------|---------|
-| Sentinel Hub | Satellite imagery | Yes | [sentinel-hub.com](https://www.sentinel-hub.com/) |
-| OpenWeather | Weather data | Yes | [openweathermap.org](https://openweathermap.org/api) |
-| OpenAI | AI chat | Yes (or Gemini) | [platform.openai.com](https://platform.openai.com/) |
-| Google AI | AI chat (alt) | Optional | [ai.google.dev](https://ai.google.dev/) |
-| Global Forest Watch | Forest data | Optional | [globalforestwatch.org](https://www.globalforestwatch.org/) |
+### 📋 Required Services
 
-### Environment Variables
+| Service                    | Purpose               | Required           | Get Key                                                     |
+| -------------------------- | --------------------- | ------------------ | ----------------------------------------------------------- |
+| 🛰️ **Sentinel Hub**        | Satellite NDVI/NDMI   | ✅ Yes             | [sentinel-hub.com](https://www.sentinel-hub.com/)           |
+| 🌤️ **OpenWeather**         | Weather data          | ✅ Yes             | [openweathermap.org](https://openweathermap.org/api)        |
+| 🤖 **OpenAI**              | AI chat               | ✅ Yes (or Gemini) | [platform.openai.com](https://platform.openai.com/)         |
+| 🤖 **Google AI**           | AI chat (alternative) | ⚪ Optional        | [ai.google.dev](https://ai.google.dev/)                     |
+| 🌳 **Global Forest Watch** | Forest data           | ⚪ Optional        | [globalforestwatch.org](https://www.globalforestwatch.org/) |
+
+### 📝 Environment Variables
+
+Create a `.env` file in the root directory:
 
 ```env
-# Required
-SENTINELHUB_CLIENT_ID=your_client_id
-SENTINELHUB_CLIENT_SECRET=your_client_secret
-OPENWEATHER_API_KEY=your_api_key
-OPENAI_API_KEY=your_api_key
+# ═══════════════════════════════════════════════════════════════════════════
+#                           🔑 REQUIRED API KEYS
+# ═══════════════════════════════════════════════════════════════════════════
 
-# Optional
-GOOGLE_AI_API_KEY=your_gemini_key
-GFW_API_KEY=your_gfw_key
-AI_PROVIDER=openai  # or "gemini"
+# 🛰️ Sentinel Hub - Satellite Imagery
+SENTINELHUB_CLIENT_ID=your_client_id_here
+SENTINELHUB_CLIENT_SECRET=your_client_secret_here
+
+# 🌤️ OpenWeather - Weather Data
+OPENWEATHER_API_KEY=your_openweather_api_key_here
+
+# 🤖 OpenAI - AI Chat (GPT-4)
+OPENAI_API_KEY=your_openai_api_key_here
+
+# ═══════════════════════════════════════════════════════════════════════════
+#                           ⚪ OPTIONAL API KEYS
+# ═══════════════════════════════════════════════════════════════════════════
+
+# 🤖 Google Gemini - Alternative AI Provider
+GOOGLE_AI_API_KEY=your_gemini_api_key_here
+
+# 🌳 Global Forest Watch - Forest Data
+GFW_API_KEY=your_gfw_api_key_here
+
+# ⚙️ Configuration
+AI_PROVIDER=openai  # Options: "openai" or "gemini"
 ```
 
 ---
 
-## 📊 Health Score Calculation
+## 🧮 Health Score Calculation
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                      ECOSYSTEM HEALTH SCORE FORMULA                          │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│   Health Score = (NDVI × 25%) + (Moisture × 20%) + (Temperature × 15%)      │
-│                + (AQI × 10%) + (Forest Cover × 20%) + (Soil Health × 10%)   │
-│                                                                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│   INDICATOR          WEIGHT    OPTIMAL RANGE       SCORE CALCULATION        │
-│   ─────────          ──────    ─────────────       ─────────────────        │
-│   NDVI               25%       0.6 - 0.8           Normalized 0-100         │
-│   Moisture           20%       40% - 70%           Normalized 0-100         │
-│   Temperature        15%       20°C - 30°C         Inverse distance         │
-│   AQI                10%       0 - 50              Inverse (100 - norm)     │
-│   Forest Cover       20%       > 30%               Direct percentage        │
-│   Soil pH            10%       6.0 - 7.5           Distance from optimal    │
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
+╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                      🧮 ECOSYSTEM HEALTH SCORE FORMULA                             ║
+╠═══════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                    ║
+║   💚 Health Score = (🌿 NDVI × 25%) + (💧 Moisture × 20%) + (🌡️ Temp × 15%)       ║
+║                   + (💨 AQI × 10%) + (🌳 Forest × 20%) + (🌱 Soil × 10%)          ║
+║                                                                                    ║
+╠═══════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                    ║
+║   INDICATOR          WEIGHT    OPTIMAL RANGE         CALCULATION                  ║
+║   ─────────          ──────    ─────────────         ───────────                  ║
+║   🌿 NDVI            25%       0.6 - 0.8             Normalized 0-100             ║
+║   💧 Moisture        20%       40% - 70%             Normalized 0-100             ║
+║   🌡️ Temperature     15%       20°C - 30°C           Inverse distance             ║
+║   💨 AQI             10%       0 - 50                Inverse (100 - norm)         ║
+║   🌳 Forest Cover    20%       > 30%                 Direct percentage            ║
+║   🌱 Soil pH         10%       6.0 - 7.5             Distance from optimal        ║
+║                                                                                    ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
 ```
+
+### 💚 Score Interpretation
+
+| Score Range | Status       | Color | Meaning                                            |
+| ----------- | ------------ | ----- | -------------------------------------------------- |
+| **70-100**  | 🟢 Excellent | Green | Healthy ecosystem, minimal intervention needed     |
+| **40-69**   | 🟡 Moderate  | Amber | Some concerns, monitoring recommended              |
+| **0-39**    | 🔴 Critical  | Red   | Urgent attention required, immediate action needed |
+
+---
+
+## 📁 Project Structure
+
+```
+🌲 Habitat_tsechacks/
+├── 📱 app/                          # Next.js App Router
+│   ├── 🏠 page.tsx                  # Main dashboard
+│   ├── 🎨 globals.css               # Global styles
+│   ├── 📄 layout.tsx                # Root layout
+│   └── 📡 api/                      # API routes
+│       ├── 📊 monitoring/           # Ecosystem monitoring
+│       ├── 🛰️ satellite/           # Satellite data
+│       ├── 🌤️ weather/             # Weather API
+│       ├── 🌱 soil/                 # Soil analysis
+│       ├── 🌲 species/              # Species recommendations
+│       ├── 🔮 predictions/          # AI predictions
+│       ├── 🔬 simulation/           # Calamity simulation
+│       └── 🤖 chat/                 # AI chat
+│
+├── 🧩 components/                   # React components
+│   ├── 🌲 habitat/                  # Domain-specific
+│   │   ├── 💚 health-gauge.tsx      # Ecosystem score
+│   │   ├── 📊 metric-card.tsx       # Metric display
+│   │   ├── 🗺️ map-canvas.tsx       # Leaflet map
+│   │   ├── 📈 trends-chart.tsx      # Historical data
+│   │   ├── ⚠️ risk-advisory.tsx    # Risk warnings
+│   │   ├── 🌲 species-list.tsx      # Species grid
+│   │   ├── 🔬 calamity-simulator.tsx # Simulation panel
+│   │   ├── 🔮 prediction-panel.tsx  # AI forecasts
+│   │   └── 🤖 ai-chat.tsx           # Chat interface
+│   └── 🎨 ui/                       # shadcn/ui components
+│
+├── 📚 lib/                          # Utility functions
+│   ├── 📡 api.ts                    # API client
+│   ├── 📍 gis-tools.ts              # GIS utilities
+│   └── 📋 types.ts                  # TypeScript types
+│
+├── 📸 Images/                       # Screenshots
+└── 📖 README.md                     # This file!
+```
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. 💾 Commit your changes (`git commit -m 'Add amazing feature'`)
+4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+5. 🔃 Open a Pull Request
 
 ---
 
@@ -625,13 +682,24 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## 👥 Team
 
-Built with ❤️ for **TSec Hacks Hackathon**
+<div align="center">
+
+Built with ❤️ for **🏆 TSec Hacks Hackathon**
+
+### 🌲 **Making the world greener, one data point at a time.** 🌲
 
 ---
 
-<div align="center">
+| 🌟  | Feature           | Status   |
+| --- | ----------------- | -------- |
+| ✅  | Planning Phase    | Complete |
+| ✅  | Monitoring Phase  | Complete |
+| ✅  | Simulation Phase  | Complete |
+| ✅  | Prediction Phase  | Complete |
+| ✅  | AI Chat Assistant | Complete |
 
-**[⬆ Back to Top](#-habitat---adaptive-reforestation-platform)**
+---
+
+**[⬆️ Back to Top](#-habitat---adaptive-reforestation-platform)**
 
 </div>
-
